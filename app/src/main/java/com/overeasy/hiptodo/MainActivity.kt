@@ -19,15 +19,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: MainAdapter
     private lateinit var toDoList: ObservableArrayList<ToDo>
     private lateinit var viewModel: ViewModel
-    
+
+    // 해야 할 것
     // Rx, MVVM 패턴 적용
-    // 날짜를 정해야 할까?
-    // 정해도 되고, 안 정해도 되잖아
-    // 꾹 누르면 이름이랑 날짜 설정하는 거 보이게 할까?
+    // 캘린더뷰로 D-Day 설정
+    // 꾹 누르면 이름이랑 날짜 설정하는 창 띄우기
     // 팝업윈도우는 카드뷰 쓰면 되겠구만
-    // 처음엔 이름으로 설정하는 것만 있는 거지
-    // 체크박스 삭제를 checkedTextView로 해야 하나, checkBox로 해야 하나?
-    // + 버튼은 힙하지 않아
+    // 삭제를 이미지 버튼으로 바꾸기
+    // 제목이 영역을 넘기면 ...으로 줄여주기
+    // 할 일 순서 정해야 한다
+    // 캘린더 뷰(팝업 윈도우)
+    // 정렬 (왼쪽을 터치하면 바 생성된 다음에 움직여서 정렬하는 걸로 할까?)
+    // 체크박스는 누르면 이펙트가 뜨던데 그냥 체크박스 쓸까?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,19 +42,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         viewModel.publishSubject.onComplete()
-        startActivity(Intent(this, MainActivity::class.java))
+
         finish()
+        super.onBackPressed()
     }
 
     private fun init() {
-        viewModel = ViewModel()
+        viewModel = ViewModel(this)
         viewModel.onCreate()
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-    }
-    fun addToDo() {
-        // editText에 입력 후 엔터 키를 누르면, 리사이클러뷰에 뿅 하고 할 일이 추가돼야 한다
     }
 
     fun println(data: String) {
