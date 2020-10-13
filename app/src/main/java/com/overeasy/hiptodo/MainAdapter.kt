@@ -1,9 +1,11 @@
 package com.overeasy.hiptodo
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.overeasy.hiptodo.databinding.TodoItemBinding
+import io.reactivex.Observable
 
 class MainAdapter(private val viewModel: ViewModel) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
@@ -25,6 +27,12 @@ class MainAdapter(private val viewModel: ViewModel) : RecyclerView.Adapter<MainA
         fun bind(viewModel: ViewModel, position: Int) {
             binding.viewModel = viewModel
             binding.position = position
+
+            /* binding.touchListener = View.OnClickListener {
+                viewModel.openPopupWindow(binding as View)
+                // viewModel.publishSubject.onNext(viewModel.toDoList[layoutPosition]!!)
+            } */
+
             binding.executePendingBindings()
         }
     }
