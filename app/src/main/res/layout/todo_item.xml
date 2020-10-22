@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:onClick="@{(view) -> viewModel.openPopupWindow(view, viewModel.toDoList[position])}">
+        android:onClick="@{() -> viewModel.openDialog(position, viewModel.toDoList[position])}">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -59,8 +59,8 @@
                         android:layout_gravity="center_vertical|end"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="@{viewModel.toDoList[position].deadline}"
+                        android:gravity="right|center_vertical"
+                        android:text="@{viewModel.showDeadline(viewModel.toDoList[position])}"
                         android:textSize="24sp" />
 
                 </LinearLayout>
@@ -76,8 +76,6 @@
                     app:srcCompat="@drawable/ic_delete" />
 
             </LinearLayout>
-
-
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 </layout>

@@ -17,8 +17,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: MainAdapter
-    private lateinit var toDoList: ObservableArrayList<ToDo>
     private lateinit var viewModel: ViewModel
 
     // 해야 할 것

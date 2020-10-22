@@ -1,17 +1,18 @@
 package com.overeasy.hiptodo
 
+import android.widget.CalendarView
+import android.widget.CalendarView.OnDateChangeListener
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
 class CustomAdapter {
     companion object {
-        @BindingAdapter("bind:verAdapter")
+        @BindingAdapter("recyclerViewAdapter")
         @JvmStatic
-        fun verAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>?) {
-            /* val linearLayoutManager = LinearLayoutManager(recyclerView.context)
-            linearLayoutManager.orientation = RecyclerView.VERTICAL */
+        fun recyclerViewAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>?) {
             recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
             recyclerView.addItemDecoration(RecyclerViewDecoration(20))
             recyclerView.adapter = adapter

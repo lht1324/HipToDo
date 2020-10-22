@@ -1,23 +1,18 @@
 package com.overeasy.hiptodo
 
-import android.app.Activity
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.CalendarView
 import android.widget.EditText
-import android.widget.PopupWindow
-import androidx.databinding.DataBindingUtil
-import com.jakewharton.rxbinding4.view.clicks
-import com.overeasy.hiptodo.databinding.PopupWindowBinding
-import com.overeasy.hiptodo.databinding.TodoItemBinding
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.subjects.PublishSubject
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
+import kotlin.math.floor
+import kotlin.properties.Delegates
 
 class ViewModel(private var mContext: Context) {
     var adapter = MainAdapter(this)
@@ -33,7 +28,7 @@ class ViewModel(private var mContext: Context) {
 
     fun onCreate() {
         toDoList.add(null)
-        toDoList[0] = ToDo("ToDo", "D-Day")
+        toDoList[0] = ToDo("ToDo", GregorianCalendar())
         adapter.notifyDataSetChanged()
     }
 
@@ -42,7 +37,6 @@ class ViewModel(private var mContext: Context) {
     }
 
     var addToDo = View.OnKeyListener { view, keyCode, keyEvent ->
-
         if ((view as EditText).text.isNotEmpty() && keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.action == KeyEvent.ACTION_DOWN) {
             val toDo = ToDo(view.text.toString())
             publishSubject.onNext(toDo)
@@ -61,20 +55,40 @@ class ViewModel(private var mContext: Context) {
         adapter.notifyDataSetChanged()
     }
 
-    fun openPopupWindow(view: View, toDo: ToDo) {
-        // 작동 확인.
-        // Dialog로 하자... 원하던 그림이 안 나오네 ㅋㅋㅋㅋㅋ
-        val binding: PopupWindowBinding = DataBindingUtil.setContentView(mContext as Activity, R.layout.popup_window)
-        binding.toDo = toDo
-        val popupWindow = PopupWindow(view)
-        val inflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val customView = inflater.inflate(R.layout.popup_window, null)
-        popupWindow.contentView = customView
-        // popupWindow.setWindowLayoutMode(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-        popupWindow.isTouchable = true
-        popupWindow.isFocusable = true
-        popupWindow.isOutsideTouchable = true
-        popupWindow.showAsDropDown(view)
+    fun openDialog(position: Int, toDo: ToDo) {
+        val toDoDialog = ToDoDialog(mContext, toDo, position, this)
+        toDoDialog.setCancelable(true)
+        toDoDialog.show()
+    }
+
+    fun dateChange(view: CalendarView, year: Int, month: Int, day: Int, position: Int) {
+        val dateToday = GregorianCalendar()
+        val dateChanged = GregorianCalendar(year, month, day)
+
+        toDoList[position]!!.date = dateChanged
+        toDoList[position]!!.day = (dateToday.timeInMillis - dateChanged.timeInMillis) / 86400000 - 1
+        adapter.notifyDataSetChanged()
+    }
+
+    fun showDeadline(toDo: ToDo): String {
+        val dateToday = GregorianCalendar()
+        val dateOrigin: Calendar? = toDo.date
+        var year by Delegates.notNull<Boolean>()
+        var month by Delegates.notNull<Boolean>()
+        var day by Delegates.notNull<Boolean>()
+
+        if (dateOrigin != null) {
+            year = dateToday.get(Calendar.YEAR) == dateOrigin!!.get(Calendar.YEAR)
+            month = dateToday.get(Calendar.MONTH) == dateOrigin!!.get(Calendar.MONTH)
+            day = dateToday.get(Calendar.DATE) == dateOrigin!!.get(Calendar.DATE)
+        }
+
+        return when {
+            dateOrigin == null -> ""
+            dateOrigin.compareTo(dateToday) == 1 -> "D${String.format("%+d", toDo.day)}"
+            year && month && day -> "D-Day"
+            else -> "Error!"
+        }
     }
 
     fun println(data: String) {

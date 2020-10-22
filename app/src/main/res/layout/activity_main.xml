@@ -35,14 +35,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
+                android:hint="할 일 입력 후 ↵ 터치"
                 android:onKey="@{viewModel.addToDo}" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                bind:verAdapter="@{viewModel.adapter}" />
+                app:recyclerViewAdapter="@{viewModel.adapter}" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
