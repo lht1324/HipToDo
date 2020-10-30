@@ -46,6 +46,7 @@ class ViewModel(private var mContext: Context) {
             inputMethodManager = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
             // 키보드 내리기
+            true
         }
         false
     }

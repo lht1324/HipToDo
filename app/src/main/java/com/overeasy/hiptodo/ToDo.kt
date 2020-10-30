@@ -5,7 +5,7 @@ import java.util.*
 class ToDo {
     var something: String
     var date: Calendar?
-    var day: Long = 0
+    var day: Long? = null
 
     constructor(something: String) {
         this.something = something
