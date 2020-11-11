@@ -1,5 +1,6 @@
 package com.overeasy.hiptodo
 
+import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -9,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.overeasy.hiptodo.databinding.TodoDialogBinding
 import java.util.*
 
-class ToDoDialog(private var mContext: Context, private val toDo: ToDo, private val position: Int, private val viewModel: ViewModel) : Dialog(mContext) {
+class ToDoDialog(private val mContext: Context, private val position: Int, private val viewModel: ViewModel) : Dialog(mContext) {
     private lateinit var binding: TodoDialogBinding
     private lateinit var toDoDialog: ToDoDialog
     private lateinit var layoutParams: WindowManager.LayoutParams
@@ -18,8 +19,7 @@ class ToDoDialog(private var mContext: Context, private val toDo: ToDo, private 
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.todo_dialog, null, false)
 
-        binding.toDo = toDo
-        binding.position = position
+        binding.toDo = viewModel.toDoList[position]
         binding.calendarView.minDate = System.currentTimeMillis()
         binding.calendarView.setOnDateChangeListener { view, year, month, day ->
             viewModel.dateChange(view, year, month, day, position)
@@ -28,7 +28,7 @@ class ToDoDialog(private var mContext: Context, private val toDo: ToDo, private 
         init()
     }
 
-    fun init() {
+    private fun init() {
         layoutParams = WindowManager.LayoutParams()
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
         layoutParams.dimAmount = 0.5f

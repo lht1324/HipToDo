@@ -1,24 +1,21 @@
 package com.overeasy.hiptodo
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.widget.CalendarView
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableArrayList
-import androidx.lifecycle.AndroidViewModel
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
 import com.overeasy.hiptodo.databinding.ActivityMainBinding
-import io.reactivex.Observable
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ViewModel
+    private lateinit var inputMethodManager: InputMethodManager
 
     // 해야 할 것
     // Rx, MVVM 패턴 적용
@@ -44,11 +41,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        viewModel = ViewModel(this)
+        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         viewModel.onCreate()
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        binding.editText.setOnKeyListener(addToDo)
+        // viewModel.rxjava(this)?
+        // 뷰가 변경됐다는 정보를 생산한다 보면 되는 거 아닌가?
+    }
+
+    private var addToDo = View.OnKeyListener { view, keyCode, keyEvent ->
+        if ((view as EditText).text.isNotEmpty() && keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.action == KeyEvent.ACTION_DOWN) {
+            val toDo = ToDo(view.text.toString())
+            viewModel.publishSubject.onNext(toDo)
+
+            view.text = null // EditText 초기화
+
+            inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            // 키보드 내리기
+            true
+        }
+        false
     }
 
     fun println(data: String) {

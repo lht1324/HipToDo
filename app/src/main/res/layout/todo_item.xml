@@ -7,6 +7,9 @@
             name="viewModel"
             type="com.overeasy.hiptodo.ViewModel" />
         <variable
+            name="viewHolder"
+            type="com.overeasy.hiptodo.MainAdapter.ViewHolder" />
+        <variable
             name="position"
             type="Integer" />
     </data>
@@ -15,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:onClick="@{() -> viewModel.openDialog(position, viewModel.toDoList[position])}">
+        android:onClick="@{() -> viewHolder.onClick(viewModel)}" >
+        // android:onClick="@{() -> viewModel.openDialog(position, viewModel.toDoList[position])}">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

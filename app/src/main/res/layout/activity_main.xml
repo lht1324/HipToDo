@@ -37,8 +37,8 @@
                 android:ems="10"
                 android:hint="할 일 입력 후 ↵ 터치"
                 android:singleLine="true"
-                android:imeOptions="actionNone"
-                android:onKey="@{viewModel.addToDo}" />
+                android:imeOptions="actionNone" />
+                // android:onKey="@{viewModel.addToDo}" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

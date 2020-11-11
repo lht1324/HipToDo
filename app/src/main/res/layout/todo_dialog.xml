@@ -5,14 +5,8 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.overeasy.hiptodo.ViewModel" />
-        <variable
             name="toDo"
             type="com.overeasy.hiptodo.ToDo" />
-        <variable
-            name="position"
-            type="Integer" />
     </data>
 
     <LinearLayout

@@ -25,8 +25,16 @@ class MainAdapter(private val viewModel: ViewModel) : RecyclerView.Adapter<MainA
         fun bind(viewModel: ViewModel, position: Int) {
             binding.viewModel = viewModel
             binding.position = position
+            viewModel.toDoList[position]
 
             binding.executePendingBindings()
+        }
+
+        fun onClick(viewModel: ViewModel) {
+            val toDoDialog = ToDoDialog(binding.root.context, adapterPosition, viewModel)
+            toDoDialog.setCancelable(true)
+            toDoDialog.show()
+            // 뷰를 구독한 뒤 뷰가 바뀌면 시작한다
         }
     }
 }
