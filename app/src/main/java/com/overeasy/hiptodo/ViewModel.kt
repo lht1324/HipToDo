@@ -1,28 +1,17 @@
 package com.overeasy.hiptodo
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
-import android.view.KeyEvent
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.CalendarView
-import android.widget.EditText
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import com.overeasy.hiptodo.model.ToDoDatabase
 import io.reactivex.subjects.PublishSubject
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
-import kotlin.math.floor
 import kotlin.properties.Delegates
 
-class ViewModel(application: Application) : ViewModel() {
+class ViewModel() {
     var adapter = MainAdapter(this)
     var toDoList = ArrayList<ToDo?>()
     var publishSubject = PublishSubject.create<ToDo>()
-    private val toDoDao = ToDoDatabase.getDatabase(application)
 
     init {
         publishSubject.subscribe { toDo ->
@@ -32,26 +21,9 @@ class ViewModel(application: Application) : ViewModel() {
 
     fun onCreate() {
         toDoList.add(null)
-        toDoList[0] = ToDo("ToDo", GregorianCalendar())
+        toDoList[0] = ToDo("ToDo", GregorianCalendar().timeInMillis)
         adapter.notifyDataSetChanged()
     }
-
-    /* var addToDo = View.OnKeyListener { view, keyCode, keyEvent ->
-        if ((view as EditText).text.isNotEmpty() && keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.action == KeyEvent.ACTION_DOWN) {
-            val toDo = ToDo(view.text.toString())
-            publishSubject.onNext(toDo)
-
-            val parent = view.parent.parent as Context
-            inputMethodManager = parent.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            view.text = null // EditText 초기화
-
-            inputMethodManager = application.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-            // 키보드 내리기
-            true
-        }
-        false
-    } */
 
     fun deleteToDo(position: Int) {
         toDoList.removeAt(position)
@@ -65,23 +37,24 @@ class ViewModel(application: Application) : ViewModel() {
         // 뷰를 구독한 뒤 뷰가 바뀌면 시작한다
     } */
 
-    fun dateChange(view: CalendarView, year: Int, month: Int, day: Int, position: Int) {
+    fun dateChange(year: Int, month: Int, day: Int, position: Int) {
         val dateToday = GregorianCalendar()
         val dateChanged = GregorianCalendar(year, month, day)
 
-        toDoList[position]!!.date = dateChanged
+        toDoList[position]!!.date = dateChanged.timeInMillis
         toDoList[position]!!.day = (dateToday.timeInMillis - dateChanged.timeInMillis) / 86400000 - 1
         adapter.notifyDataSetChanged()
     }
 
     fun showDeadline(toDo: ToDo): String {
         val dateToday = GregorianCalendar()
-        val dateOrigin: Calendar? = toDo.date
+        val dateOrigin: Calendar? = if (toDo.date == null) null else GregorianCalendar()
         var year by Delegates.notNull<Boolean>()
         var month by Delegates.notNull<Boolean>()
         var day by Delegates.notNull<Boolean>()
 
         if (dateOrigin != null) {
+            dateOrigin.timeInMillis = toDo.date!!
             year = dateToday.get(Calendar.YEAR) == dateOrigin!!.get(Calendar.YEAR)
             month = dateToday.get(Calendar.MONTH) == dateOrigin!!.get(Calendar.MONTH)
             day = dateToday.get(Calendar.DATE) == dateOrigin!!.get(Calendar.DATE)

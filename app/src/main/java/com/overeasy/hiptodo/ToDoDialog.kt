@@ -21,9 +21,11 @@ class ToDoDialog(private val mContext: Context, private val position: Int, priva
 
         binding.toDo = viewModel.toDoList[position]
         binding.calendarView.minDate = System.currentTimeMillis()
-        binding.calendarView.setOnDateChangeListener { view, year, month, day ->
-            viewModel.dateChange(view, year, month, day, position)
+
+        binding.calendarView.setOnDateChangeListener { _, year, month, day ->
+            viewModel.dateChange(year, month, day, position)
         }
+
         setContentView(binding.root)
         init()
     }

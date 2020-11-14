@@ -1,19 +1,11 @@
 package com.overeasy.hiptodo
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
-import java.util.*
-
-@Entity(tableName = "todoTable")
 class ToDo {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    /* @PrimaryKey(autoGenerate = true)
+    var id: Int? = null */
 
     var something: String
-    var date: Calendar?
-
-    @Ignore
+    var date: Long?
     var day: Long? = null
 
     constructor(something: String) {
@@ -21,7 +13,7 @@ class ToDo {
         this.date = null
     }
 
-    constructor(something: String, date: Calendar) {
+    constructor(something: String, date: Long) {
         this.something = something
         this.date = date
     }

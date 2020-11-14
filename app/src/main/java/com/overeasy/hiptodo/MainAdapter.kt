@@ -23,6 +23,7 @@ class MainAdapter(private val viewModel: ViewModel) : RecyclerView.Adapter<MainA
 
     inner class ViewHolder(private val binding: TodoItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(viewModel: ViewModel, position: Int) {
+            binding.viewHolder = this
             binding.viewModel = viewModel
             binding.position = position
             viewModel.toDoList[position]

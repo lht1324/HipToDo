@@ -41,7 +41,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
+        // viewModel = ViewModelProvider(this).get(ViewModel::class.java)
+        viewModel = ViewModel()
         viewModel.onCreate()
 
         binding.viewModel = viewModel
@@ -66,11 +67,11 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    fun println(data: String) {
+    private fun println(data: String) {
         Log.d("MainActivity", data)
     }
 
-    fun toast(data: String) {
+    private fun toast(data: String) {
         Toast.makeText(this, data, Toast.LENGTH_SHORT)
     }
 }
