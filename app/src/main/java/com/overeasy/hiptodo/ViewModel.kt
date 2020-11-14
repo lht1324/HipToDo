@@ -1,8 +1,6 @@
 package com.overeasy.hiptodo
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,13 +27,6 @@ class ViewModel() {
         toDoList.removeAt(position)
         adapter.notifyDataSetChanged()
     }
-
-    /* fun openDialog(position: Int, toDo: ToDo) {
-        val toDoDialog = ToDoDialog(toDo, position, this)
-        toDoDialog.setCancelable(true)
-        toDoDialog.show()
-        // 뷰를 구독한 뒤 뷰가 바뀌면 시작한다
-    } */
 
     fun dateChange(year: Int, month: Int, day: Int, position: Int) {
         val dateToday = GregorianCalendar()

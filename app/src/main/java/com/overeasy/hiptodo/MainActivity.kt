@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        // viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         viewModel = ViewModel()
         viewModel.onCreate()
 
