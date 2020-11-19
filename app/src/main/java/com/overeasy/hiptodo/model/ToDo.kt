@@ -1,8 +1,12 @@
 package com.overeasy.hiptodo.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "todoTable")
 class ToDo {
-    /* @PrimaryKey(autoGenerate = true)
-    var id: Int? = null */
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null
 
     var something: String
     var date: Long?

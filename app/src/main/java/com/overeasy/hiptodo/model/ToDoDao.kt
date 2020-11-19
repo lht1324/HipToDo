@@ -15,18 +15,9 @@ interface ToDoDao {
     @Insert
     fun insertToDo(toDo: ToDo)
 
-    @Insert
-    fun insertAll(toDoList: ArrayList<ToDo>)
-
     @Update
     fun updateToDo(toDo: ToDo)
 
-    @Update
-    fun updateAll(toDoList: ArrayList<ToDo>)
-
     @Delete
     fun deleteToDo(toDo: ToDo)
-
-    @Delete
-    fun deleteAll(toDoList: ArrayList<ToDo>)
 }
