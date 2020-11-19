@@ -9,8 +9,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import com.overeasy.hiptodo.databinding.ActivityMainBinding
+import com.overeasy.hiptodo.model.ToDo
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     // 아이템 생성 후 EditText가 초기화되는 게 아닌 줄바꿈이 한 칸 추가된다
     // 정렬 (왼쪽을 터치하면 바 생성된 다음에 움직여서 정렬하는 걸로 할까?)
     // D-Day가 정해졌으면 D-Day가 필요하지만 정해지지 않으면 굳이 신경쓸 필요가 없다
+    // 리사이클러뷰가 비었으면 추가하는 법을 보여준다
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +54,8 @@ class MainActivity : AppCompatActivity() {
 
     private var addToDo = View.OnKeyListener { view, keyCode, keyEvent ->
         if ((view as EditText).text.isNotEmpty() && keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.action == KeyEvent.ACTION_DOWN) {
-            val toDo = ToDo(view.text.toString())
-            viewModel.publishSubject.onNext(toDo)
+            // val toDo = ToDo(view.text.toString())
+            viewModel.publishSubject.onNext(view.text.toString())
 
             view.text = null // EditText 초기화
 

@@ -1,6 +1,7 @@
 package com.overeasy.hiptodo
 
 import android.util.Log
+import com.overeasy.hiptodo.model.ToDo
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 import kotlin.collections.ArrayList
@@ -9,11 +10,11 @@ import kotlin.properties.Delegates
 class ViewModel() {
     var adapter = MainAdapter(this)
     var toDoList = ArrayList<ToDo?>()
-    var publishSubject = PublishSubject.create<ToDo>()
+    var publishSubject = PublishSubject.create<String>()
 
     init {
-        publishSubject.subscribe { toDo ->
-            toDoList.add(toDo)
+        publishSubject.subscribe { something ->
+            toDoList.add(ToDo(something))
         }
     }
 

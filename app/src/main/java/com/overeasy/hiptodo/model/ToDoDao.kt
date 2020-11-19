@@ -2,7 +2,6 @@ package com.overeasy.hiptodo.model
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.overeasy.hiptodo.ToDo
 
 @Dao
 interface ToDoDao {

@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo
+package com.overeasy.hiptodo.model
 
 class ToDo {
     /* @PrimaryKey(autoGenerate = true)

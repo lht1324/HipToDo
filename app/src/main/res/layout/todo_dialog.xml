@@ -6,7 +6,7 @@
     <data>
         <variable
             name="toDo"
-            type="com.overeasy.hiptodo.ToDo" />
+            type="com.overeasy.hiptodo.model.ToDo" />
     </data>
 
     <LinearLayout
