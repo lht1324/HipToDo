@@ -3,7 +3,7 @@ package com.overeasy.hiptodo.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "todoTable")
+@Entity(tableName = "todo_table")
 class ToDo {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

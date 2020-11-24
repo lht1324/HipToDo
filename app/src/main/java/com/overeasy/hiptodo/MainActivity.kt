@@ -9,8 +9,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.overeasy.hiptodo.databinding.ActivityMainBinding
-import com.overeasy.hiptodo.model.ToDo
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        viewModel = ViewModel()
+        // viewModel = ViewModel()
+        viewModel = ViewModelProvider(this, ViewModel.Factory(application)).get(ViewModel::class.java)
         viewModel.onCreate()
 
         binding.viewModel = viewModel

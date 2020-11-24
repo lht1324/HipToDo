@@ -11,19 +11,20 @@ abstract class ToDoDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: ToDoDatabase? = null
+        private var instance: ToDoDatabase? = null
 
-        fun getDatabase(context: Context): ToDoDatabase? {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE = Room.databaseBuilder(context.applicationContext, ToDoDatabase::class.java, "todo_database")
-                    .build() // Nullable
-                INSTANCE
+        fun getInstance(context: Context) : ToDoDatabase? {
+            if (instance == null) {
+                synchronized (ToDoDatabase::class.java) {
+                    instance = Room.databaseBuilder(
+                        context,
+                        ToDoDatabase::class.java,
+                        "todo_database"
+                    )
+                    .build()
+                }
             }
+            return instance
         }
-    }
-
-    //디비객체제거
-    open fun destroyInstance() {
-        INSTANCE = null
     }
 }
