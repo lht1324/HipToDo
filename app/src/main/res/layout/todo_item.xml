@@ -19,7 +19,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:onClick="@{() -> viewHolder.onClick(viewModel)}" >
-        <!-- android:onClick="@{() -> viewModel.openDialog(position, viewModel.toDoList[position])}"> -->
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

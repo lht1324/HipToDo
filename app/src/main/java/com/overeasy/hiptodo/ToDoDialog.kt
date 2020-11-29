@@ -1,6 +1,5 @@
 package com.overeasy.hiptodo
 
-import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -8,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import com.overeasy.hiptodo.databinding.TodoDialogBinding
-import java.util.*
 
 class ToDoDialog(private val mContext: Context, private val position: Int, private val viewModel: ViewModel) : Dialog(mContext) {
     private lateinit var binding: TodoDialogBinding

@@ -1,25 +1,24 @@
 package com.overeasy.hiptodo.model
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface ToDoDao {
-    /* @Query("SELECT * FROM todoTable")
-    fun getAll(): LiveData<ArrayList<ToDo>>
+    @Query("SELECT * FROM toDoTable")
+    fun getAll(): ArrayList<ToDo>
 
-    // select _id, something, date from $tableName
-    @Query("SELECT * FROM todoTable WHERE id IS :inputId")
-    fun getToDo(inputId: Int): ToDo */
+    @Query("SELECT * FROM toDoTable WHERE id IS :inputId")
+    fun getToDo(inputId: Int): ToDo
 
-    @Insert
-    fun insertToDo(entity: ToDo)
+    // impl이 생성되지 않는다
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(toDo: ToDo)
 
-    @Update
-    fun updateToDo(entity: ToDo)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(toDo: ToDo)
 
     @Delete
-    fun deleteToDo(entity: ToDo)
+    fun delete(toDo: ToDo)
 
     // deleteAll : 초기화
 }

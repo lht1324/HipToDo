@@ -1,11 +1,11 @@
-package com.overeasy.todo.function
+package com.overeasy.hiptodo.function
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 class ItemTouchHelper(private val mAdapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        var dragFlags: Int = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        val dragFlags: Int = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         return makeMovementFlags(dragFlags, 0)
     }
 

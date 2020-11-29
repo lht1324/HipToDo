@@ -9,25 +9,20 @@ import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 import androidx.lifecycle.ViewModelProvider
 import com.overeasy.hiptodo.model.ToDo
+import com.overeasy.hiptodo.model.ToDoDao
+import com.overeasy.hiptodo.model.ToDoDatabase
 
 class ViewModel(application: Application) : ViewModel() {
     var adapter = MainAdapter(this)
     var toDoList = ArrayList<ToDo?>()
     var publishSubject = PublishSubject.create<String>()
-    // DB가 없으면 실행되고 있으면 안 된다
-    // 뭐가 문제인 거지?
-    // 일단 모델을 전부 제거했다
-    // 뷰모델도 제대로 해 주고
-    // DB, DAO, Entity 중 하나가 문제라는 건데
-    // 세 놈 전부 빼니까 돌아간다
-    // 하나씩 넣으면서 삽질 한 번 해 볼까
-    // private var toDoDao = ToDoDatabase.getInstance(application)!!.toDoDao()
+    var toDoDao: ToDoDao = ToDoDatabase.getInstance(application)!!.toDoDao()
 
     init {
         publishSubject.subscribe { something ->
             val toDo = ToDo(something)
             toDoList.add(toDo)
-            // toDoDao.insertToDo(toDo)
+            toDoDao.insert(toDo)
         }
     }
 
@@ -39,13 +34,13 @@ class ViewModel(application: Application) : ViewModel() {
 
     fun onCreate() {
         toDoList.add(null)
-        toDoList[0] = ToDo("ToDo", GregorianCalendar().timeInMillis)
-        // toDoDao.insertToDo(toDoList[0]!!)
+        toDoList[0] = ToDo("ToDo", GregorianCalendar())
+        toDoDao.insert(toDoList[0]!!)
         adapter.notifyDataSetChanged()
     }
 
     fun deleteToDo(position: Int) {
-        // toDoDao.deleteToDo(toDoList[position]!!)
+        toDoDao.delete(toDoList[position]!!)
         toDoList.removeAt(position)
         adapter.notifyDataSetChanged()
     }
@@ -54,24 +49,23 @@ class ViewModel(application: Application) : ViewModel() {
         val dateToday = GregorianCalendar()
         val dateChanged = GregorianCalendar(year, month, day)
 
-        toDoList[position]!!.date = dateChanged.timeInMillis
+        toDoList[position]!!.date = dateChanged
         toDoList[position]!!.day = (dateToday.timeInMillis - dateChanged.timeInMillis) / 86400000 - 1
-        // toDoDao.updateToDo(toDoList[position]!!)
+        toDoDao.update(toDoList[position]!!)
         adapter.notifyDataSetChanged()
     }
 
     fun showDeadline(toDo: ToDo): String {
         val dateToday = GregorianCalendar()
-        val dateOrigin: Calendar? = if (toDo.date == null) null else GregorianCalendar()
+        val dateOrigin: Calendar? = if (toDo.date == null) null else toDo.date
         var year by Delegates.notNull<Boolean>()
         var month by Delegates.notNull<Boolean>()
         var day by Delegates.notNull<Boolean>()
 
         if (dateOrigin != null) {
-            dateOrigin.timeInMillis = toDo.date!!
-            year = dateToday.get(Calendar.YEAR) == dateOrigin!!.get(Calendar.YEAR)
-            month = dateToday.get(Calendar.MONTH) == dateOrigin!!.get(Calendar.MONTH)
-            day = dateToday.get(Calendar.DATE) == dateOrigin!!.get(Calendar.DATE)
+            year = dateToday.get(Calendar.YEAR) == dateOrigin.get(Calendar.YEAR)
+            month = dateToday.get(Calendar.MONTH) == dateOrigin.get(Calendar.MONTH)
+            day = dateToday.get(Calendar.DATE) == dateOrigin.get(Calendar.DATE)
         }
 
         return when {
