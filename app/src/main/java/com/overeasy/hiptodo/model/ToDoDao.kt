@@ -5,13 +5,12 @@ import androidx.room.*
 @Dao
 interface ToDoDao {
     @Query("SELECT * FROM toDoTable")
-    fun getAll(): ArrayList<ToDo>
+    fun getAll(): List<ToDo?>
 
     @Query("SELECT * FROM toDoTable WHERE id IS :inputId")
     fun getToDo(inputId: Int): ToDo
 
-    // impl이 생성되지 않는다
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(toDo: ToDo)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

@@ -33,9 +33,21 @@ class ViewModel(application: Application) : ViewModel() {
     }
 
     fun onCreate() {
-        toDoList.add(null)
-        toDoList[0] = ToDo("ToDo", GregorianCalendar())
-        toDoDao.insert(toDoList[0]!!)
+        if (toDoDao.getAll().isNotEmpty()) {
+            toDoList.addAll(toDoDao.getAll())
+            for (i in toDoList.indices) {
+                println("toDoList[$i]")
+                println("something = ${toDoList[i]!!.something}")
+                println("date = ${toDoList[i]!!.date}")
+            }
+        }
+        else {
+            toDoList.add(null)
+            toDoList[0] = ToDo("ToDo", GregorianCalendar())
+            toDoDao.insert(toDoList[0]!!)
+            // 얘는 제대로 들어갔구만
+            // 날짜 바꾸고 넣는 거 구현 안 한 거 아니냐?
+        }
         adapter.notifyDataSetChanged()
     }
 
@@ -76,7 +88,7 @@ class ViewModel(application: Application) : ViewModel() {
         }
     }
 
-    fun println(data: String) {
+    private fun println(data: String) {
         Log.d("ViewModel", data)
     }
 }

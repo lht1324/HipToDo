@@ -20,6 +20,7 @@ class ToDoDialog(private val mContext: Context, private val position: Int, priva
         binding.toDo = viewModel.toDoList[position]
         binding.calendarView.minDate = System.currentTimeMillis()
 
+        // editText를 바꿔도 아이템이 안 바뀐다
         binding.calendarView.setOnDateChangeListener { _, year, month, day ->
             viewModel.dateChange(year, month, day, position)
         }
