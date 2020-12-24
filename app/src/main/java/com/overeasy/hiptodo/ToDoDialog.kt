@@ -3,27 +3,49 @@ package com.overeasy.hiptodo
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.WindowManager
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import com.overeasy.hiptodo.databinding.TodoDialogBinding
+import com.overeasy.hiptodo.model.ToDo
+import java.util.*
 
-class ToDoDialog(private val mContext: Context, private val position: Int, private val viewModel: ViewModel) : Dialog(mContext) {
+class ToDoDialog(private val mContext: Context) : Dialog(mContext) {
     private lateinit var binding: TodoDialogBinding
     private lateinit var toDoDialog: ToDoDialog
     private lateinit var layoutParams: WindowManager.LayoutParams
+    lateinit var toDo: ToDo
+    var something = ""
+    var date = GregorianCalendar()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.todo_dialog, null, false)
 
-        binding.toDo = viewModel.toDoList[position]
+        binding.toDo = toDo
         binding.calendarView.minDate = System.currentTimeMillis()
 
         // editText를 바꿔도 아이템이 안 바뀐다
         binding.calendarView.setOnDateChangeListener { _, year, month, day ->
-            viewModel.dateChange(year, month, day, position)
+            toDo.date = GregorianCalendar(year, month, day)
+            // 뷰모델 안에 있는 toDoList[position]의 something과 date를 바꿔준다
+            // 이걸 어디서 맡냐가 문제인데...
         }
+
+        binding.editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                toDo.something = p0.toString()
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
 
         setContentView(binding.root)
         init()

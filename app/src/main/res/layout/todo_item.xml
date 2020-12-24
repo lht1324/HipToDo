@@ -4,21 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewModel"
-            type="com.overeasy.hiptodo.ViewModel" />
-        <variable
             name="viewHolder"
             type="com.overeasy.hiptodo.MainAdapter.ViewHolder" />
         <variable
-            name="position"
-            type="Integer" />
+            name="toDo"
+            type="com.overeasy.hiptodo.model.ToDo" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:onClick="@{() -> viewHolder.onClick(viewModel)}" >
+        android:onClick="@{() -> viewHolder.onClick(toDo)}" >
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -54,7 +51,7 @@
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="@{viewModel.toDoList[position].something}"
+                        android:text="@{toDo.something}"
                         android:textSize="30sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/textView2"
@@ -71,7 +68,7 @@
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
                         android:singleLine="true"
-                        android:text="@{viewModel.showDeadline(viewModel.toDoList[position])}"
+                        android:text="@{viewHolder.showDeadline(toDo)}"
                         android:textSize="24sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -91,12 +88,14 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="20dp"
                     android:background="#FFFFFF"
-                    android:onClick="@{(v) -> viewModel.deleteToDo(position)}"
+                    android:onClick="@{(v) -> viewHolder.deleteToDo(toDo)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/constraintLayout"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_delete" />
+                <!--얘도 결국 옵저버로 처리해야 할 건데 그냥 뷰홀더 안에 라이브데이터 놓을까? -->
+                <!-- onItemDeleted 같은 거 onItemClicked랑 비슷하게 만들면 되잖아 -->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

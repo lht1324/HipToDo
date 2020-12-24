@@ -2,17 +2,17 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "82c5e6d185164cc290371f4d1ef06a6c",
+    "identityHash": "9a1bc79f9f94e254153b0b029bac5fa4",
     "entities": [
       {
         "tableName": "toDoTable",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `something` TEXT NOT NULL, `date` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `something` TEXT NOT NULL, `date` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "something",
@@ -40,7 +40,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '82c5e6d185164cc290371f4d1ef06a6c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9a1bc79f9f94e254153b0b029bac5fa4')"
     ]
   }
 }

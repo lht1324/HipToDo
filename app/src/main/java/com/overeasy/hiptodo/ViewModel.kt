@@ -2,6 +2,8 @@ package com.overeasy.hiptodo
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import io.reactivex.subjects.PublishSubject
 import java.util.*
@@ -13,16 +15,26 @@ import com.overeasy.hiptodo.model.ToDoDao
 import com.overeasy.hiptodo.model.ToDoDatabase
 
 class ViewModel(application: Application) : ViewModel() {
-    var adapter = MainAdapter(this)
-    var toDoList = ArrayList<ToDo?>()
+    // var adapter = MainAdapter(toDoList)
+    var toDoList = ArrayList<ToDo>() // nullable 빼고 toDoList.add(ToDo(something) 되는지 보기
+    var toDoLiveData: MutableLiveData<ArrayList<ToDo>> = MutableLiveData<ArrayList<ToDo>>()
+    // D-Day가 나타나는 게 어떤 조건이지
+    // 새로 켜서 DB에서 읽어오거나
+    // null인 놈을 캘린더뷰로 설정하거나
+    // 설정된 건 바로 바꾸면 된다
+    // 리스너로 설정하면 되니까
+    // 읽어왔을 때가 문제인 건데
+    // 엔티티에 있는 date를 MutableLiveData로 바꿔버릴까?
+    // MutableLiveData<Calendar?> 이러면 되잖아
+    // Observer는 연결할 수 있나? 엔티티랑
     var publishSubject = PublishSubject.create<String>()
     var toDoDao: ToDoDao = ToDoDatabase.getInstance(application)!!.toDoDao()
 
     init {
         publishSubject.subscribe { something ->
-            val toDo = ToDo(something)
+            var toDo = ToDo(something)
+            toDo.id = toDoDao.insert(toDo)
             toDoList.add(toDo)
-            toDoDao.insert(toDo)
         }
     }
 
@@ -35,57 +47,45 @@ class ViewModel(application: Application) : ViewModel() {
     fun onCreate() {
         if (toDoDao.getAll().isNotEmpty()) {
             toDoList.addAll(toDoDao.getAll())
+
             for (i in toDoList.indices) {
-                println("toDoList[$i]")
-                println("something = ${toDoList[i]!!.something}")
-                println("date = ${toDoList[i]!!.date}")
+                if (toDoList[i].date != null)
+                    toDoList[i].day = (GregorianCalendar().timeInMillis - toDoList[i].date!!.timeInMillis) / 86400000 - 1
             }
         }
         else {
-            toDoList.add(null)
-            toDoList[0] = ToDo("ToDo", GregorianCalendar())
-            toDoDao.insert(toDoList[0]!!)
-            // 얘는 제대로 들어갔구만
-            // 날짜 바꾸고 넣는 거 구현 안 한 거 아니냐?
+            // toDoList.add(null)
+            toDoList.add(ToDo("ToDo"))
+            // toDoList[0] = ToDo("ToDo")
+            toDoList[0].date = GregorianCalendar()
+            toDoDao.insert(toDoList[0])
+            toDoLiveData.value = toDoList
         }
-        adapter.notifyDataSetChanged()
     }
 
-    fun deleteToDo(position: Int) {
-        toDoDao.delete(toDoList[position]!!)
-        toDoList.removeAt(position)
-        adapter.notifyDataSetChanged()
-    }
-
-    fun dateChange(year: Int, month: Int, day: Int, position: Int) {
-        val dateToday = GregorianCalendar()
-        val dateChanged = GregorianCalendar(year, month, day)
-
-        toDoList[position]!!.date = dateChanged
-        toDoList[position]!!.day = (dateToday.timeInMillis - dateChanged.timeInMillis) / 86400000 - 1
-        toDoDao.update(toDoList[position]!!)
-        adapter.notifyDataSetChanged()
-    }
-
-    fun showDeadline(toDo: ToDo): String {
-        val dateToday = GregorianCalendar()
-        val dateOrigin: Calendar? = if (toDo.date == null) null else toDo.date
-        var year by Delegates.notNull<Boolean>()
-        var month by Delegates.notNull<Boolean>()
-        var day by Delegates.notNull<Boolean>()
-
-        if (dateOrigin != null) {
-            year = dateToday.get(Calendar.YEAR) == dateOrigin.get(Calendar.YEAR)
-            month = dateToday.get(Calendar.MONTH) == dateOrigin.get(Calendar.MONTH)
-            day = dateToday.get(Calendar.DATE) == dateOrigin.get(Calendar.DATE)
+    fun deleteToDo(toDo: ToDo) {
+        for (i in toDoList.indices) {
+            if (toDoList[i].id == toDo.id) {
+                toDoList.removeAt(i)
+                break
+                // removeAt을 실행한 즉시 toDoList의 사이즈가 1 줄어든다
+                // 그래서 에러엔 사이즈가 안 맞다고 나온다
+            }
         }
-
-        return when {
-            dateOrigin == null -> ""
-            dateOrigin.compareTo(dateToday) == 1 -> "D${String.format("%+d", toDo.day)}"
-            year && month && day -> "D-Day"
-            else -> "Error!"
+        toDoDao.delete(toDo)
+        toDoLiveData.value = toDoList
+    }
+    
+    fun updateToDo(toDo: ToDo) {
+        for (i in toDoList.indices) {
+            if (toDoList[i].id == toDo.id) {
+                toDoList[i] = toDo
+                toDoList[i].day = (GregorianCalendar().timeInMillis - toDo.date!!.timeInMillis) / 86400000 - 1
+            }
         }
+        toDoDao.update(toDo)
+
+        toDoLiveData.value = toDoList
     }
 
     private fun println(data: String) {

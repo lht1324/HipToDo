@@ -8,7 +8,7 @@ import java.util.*
 @Entity(tableName = "toDoTable")
 class ToDo {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Long = 0
 
     var something: String
     var date: Calendar?
@@ -21,9 +21,9 @@ class ToDo {
         this.date = null
     }
 
-    @Ignore
+    /* @Ignore
     constructor(something: String, date: Calendar) {
         this.something = something
         this.date = date
-    }
+    } */
 }
