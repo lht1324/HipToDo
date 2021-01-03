@@ -71,10 +71,19 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
                 month = dateToday.get(Calendar.MONTH) == dateOrigin.get(Calendar.MONTH)
                 day = dateToday.get(Calendar.DATE) == dateOrigin.get(Calendar.DATE)
             }
+            // 다이얼로그 둥근 모서리 적용하니까
+            // 둥근 모서리는 나오지도 않는다
+            // D+로 출력하는 것도 넣어야겠다
+            // 캘린더가 minDate 때문에 막히니까 이전 날짜 읽지를 못 하네
+            // 일단 이건 해결한 거 같은데
+            // 당일을 선택하면 D-Day가 안 나온다
+            // 그냥 minDate 해제할까?
+            // D-Day 앱으로 가는 거야
 
+            
             return when {
                 dateOrigin == null -> ""
-                dateOrigin.compareTo(dateToday) == 1 -> "D${String.format("%+d", toDo.day)}"
+                dateOrigin.compareTo(dateToday) == 1 || dateOrigin.compareTo(dateToday) == -1 -> "D${String.format("%+d", toDo.day)}"
                 year && month && day -> "D-Day"
                 else -> "Error!"
             }

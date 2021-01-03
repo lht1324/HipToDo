@@ -1,9 +1,12 @@
 package com.overeasy.hiptodo
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -24,11 +27,17 @@ class MainActivity : AppCompatActivity() {
 
     // 해야 할 것
     // Rx 적용
-    // 할 일 순서 정해야 한다
     // Dialog 모서리 둥글게 못 하나?
     // 정렬 (왼쪽을 터치하면 바 생성된 다음에 움직여서 정렬하는 걸로 할까?)
-    // D-Day가 정해졌으면 D-Day가 필요하지만 정해지지 않으면 굳이 신경쓸 필요가 없다
     // 리사이클러뷰가 비었으면 추가하는 법을 보여준다
+    // 시간이 지나면 자동으로 삭제되는 걸로 할까?
+    // 일단 기본은 자동삭제고 옵션으로 D+ 보여주기 넣으면 될 거 같은데
+    // 야 이 시발 이 앱 개발명 뭐야
+    // HipToDo 아냐
+    // + 같은 흔하디 흔한 건 넣을 수 없다
+    // ㅇㅋ?
+    // 잊어버리든 말든 알아서 하라 그래
+    // 지가 잊어버린 건데 뭐 어쩌라고
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDialog(toDo: ToDo) {
         val toDoDialog = ToDoDialog(this)
+        toDoDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         toDoDialog.toDo = toDo
         toDoDialog.setOnDismissListener {
             viewModel.updateToDo(toDoDialog.toDo)
