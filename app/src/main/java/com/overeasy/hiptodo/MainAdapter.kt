@@ -15,6 +15,7 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
     private lateinit var toDoList: ArrayList<ToDo>
     var onItemClicked = MutableLiveData<ToDo>()
     var onItemDeleted = MutableLiveData<ToDo>()
+    var onItemMoved = MutableLiveData<ArrayList<Int>>() // ArrayList 통으로 옮겨야 하는 거 아냐?
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -36,6 +37,34 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return toDoList.size
+    }
+
+    fun onItemDragMove(beforePosition: Int, afterPosition: Int) {
+        if (beforePosition < afterPosition) {
+            for (i in beforePosition until afterPosition)
+                Collections.swap(toDoList, i, i + 1)
+            // ViewModel도 바꿔줘야 한다
+        }
+        else {
+            for (i in beforePosition downTo afterPosition + 1) {
+                Collections.swap(toDoList, i, i - 1)
+            }
+        }
+        val tempArrayList = ArrayList<Int>()
+        tempArrayList.add(beforePosition)
+        tempArrayList.add(afterPosition)
+        onItemMoved.value = tempArrayList
+        // 그냥 여기서 스왑하는 걸 실행해버릴까?
+        // 아냐
+        // 결국 필요한 건 beforePosition하고 afterPosition이잖아
+        // 이 두 놈을 뷰모델에 보내야 한다는 건데
+        // 여기서 실행하는 건 나쁘지 않은데
+        // 혹시 액티비티에 있는 setItems랑 겹치진 않을까?
+        notifyItemMoved(beforePosition, afterPosition)
+    }
+
+    fun changeMoveEvent() {
+
     }
 
     inner class ViewHolder(

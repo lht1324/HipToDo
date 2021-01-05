@@ -20,6 +20,9 @@ interface ToDoDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(toDo: ToDo)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateAll(toDoList: ArrayList<ToDo>)
+
     @Delete
     fun delete(toDo: ToDo)
 

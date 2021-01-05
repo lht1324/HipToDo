@@ -13,8 +13,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.overeasy.hiptodo.databinding.ActivityMainBinding
+import com.overeasy.hiptodo.function.ItemTouchHelperCallback
 import com.overeasy.hiptodo.model.ToDo
 import java.util.*
 
@@ -27,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
     // 해야 할 것
     // Rx 적용
-    // Dialog 모서리 둥글게 못 하나?
     // 정렬 (왼쪽을 터치하면 바 생성된 다음에 움직여서 정렬하는 걸로 할까?)
     // 리사이클러뷰가 비었으면 추가하는 법을 보여준다
     // 시간이 지나면 자동으로 삭제되는 걸로 할까?
@@ -60,6 +61,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.onCreate()
         adapter = MainAdapter()
         adapter.setItems(viewModel.toDoList)
+        val callback = ItemTouchHelperCallback(adapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(binding.recyclerView)
 
         binding.apply {
             // recyclerView.adapter = adapter
@@ -76,6 +80,9 @@ class MainActivity : AppCompatActivity() {
         })
         adapter.onItemDeleted.observe(this, { toDo ->
             viewModel.deleteToDo(toDo)
+        })
+        adapter.onItemMoved.observe(this, { toDoList ->
+            viewModel.movedItemsUpdate(toDoList[0], toDoList[1])
         })
         viewModel.toDoLiveData.observe(this, { toDoList ->
             adapter.setItems(toDoList)

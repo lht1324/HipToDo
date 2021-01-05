@@ -108,6 +108,23 @@ class ViewModel(application: Application) : ViewModel() {
         toDoLiveData.value = toDoList
     }
 
+    fun movedItemsUpdate(beforePosition: Int, afterPosition: Int) {
+        if (beforePosition < afterPosition) {
+            for (i in beforePosition until afterPosition)
+                Collections.swap(toDoList, i, i + 1)
+            // ViewModel도 바꿔줘야 한다
+        }
+        else {
+            for (i in beforePosition downTo afterPosition + 1) {
+                Collections.swap(toDoList, i, i - 1)
+            }
+        }
+        for (i in toDoList.indices)
+        toDoDao.updateAll(toDoList)
+        // 안 되네
+        // 반복문으로 update 돌리는 건 좀 무식한 느낌이고
+    }
+
     private fun println(data: String) {
         Log.d("ViewModel", data)
     }
