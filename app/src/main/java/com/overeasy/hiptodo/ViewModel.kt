@@ -70,14 +70,12 @@ class ViewModel(application: Application) : ViewModel() {
             for (i in toDoList.indices) {
                 if (toDoList[i].date != null)
                     toDoList[i].day = (GregorianCalendar().timeInMillis - toDoList[i].date!!.timeInMillis) / 86400000 - 1
-                // 여기서 day 만들어서 넣어준다 해도
-                // 어떤 미친 놈이 다이얼로그 열고 아무 것도 안 하고 그냥 꺼버리면?
-                // if로 저장된 date 체크해서 일단 day 만들고 다이얼로그 닫혔을 때 이전 날짜면 day 유지하고 아니면 바꾸는 걸로 하자
             }
         }
         else {
             toDoList.add(ToDo("ToDo"))
             toDoList[0].date = GregorianCalendar()
+            toDoList[0].day = toDoList[0].date!!.timeInMillis / 86400000 - 1
             toDoDao.insert(toDoList[0])
             toDoLiveData.value = toDoList
         }
@@ -110,19 +108,33 @@ class ViewModel(application: Application) : ViewModel() {
 
     fun movedItemsUpdate(beforePosition: Int, afterPosition: Int) {
         if (beforePosition < afterPosition) {
-            for (i in beforePosition until afterPosition)
+            for (i in beforePosition until afterPosition) {
                 Collections.swap(toDoList, i, i + 1)
-            // ViewModel도 바꿔줘야 한다
+                toDoSwap(i, i + 1)
+                toDoDao.update(toDoList[i])
+                toDoDao.update(toDoList[i + 1])
+            }
         }
         else {
             for (i in beforePosition downTo afterPosition + 1) {
                 Collections.swap(toDoList, i, i - 1)
+                toDoSwap(i, i - 1)
+                toDoDao.update(toDoList[i])
+                toDoDao.update(toDoList[i - 1])
             }
         }
-        for (i in toDoList.indices)
-        toDoDao.updateAll(toDoList)
-        // 안 되네
-        // 반복문으로 update 돌리는 건 좀 무식한 느낌이고
+    }
+
+    private fun toDoSwap(num1: Int, num2: Int) {
+        val tempSomething = toDoList[num1].something
+        val tempDate = if (toDoList[num1].date == null) null else toDoList[num1].date
+        val tempDay = if (toDoList[num1].day == null) null else toDoList[num1].day
+        toDoList[num1].something = toDoList[num2].something
+        toDoList[num1].date = toDoList[num2].date
+        toDoList[num1].day = toDoList[num2].day
+        toDoList[num2].something = tempSomething
+        toDoList[num2].date = tempDate
+        toDoList[num2].day = tempDay
     }
 
     private fun println(data: String) {

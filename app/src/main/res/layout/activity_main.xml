@@ -10,6 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -35,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="할 일 입력 후 ↵ 터치"
-                android:singleLine="true"
-                android:imeOptions="actionNone" />
+                android:imeOptions="actionNone"
+                android:singleLine="true" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

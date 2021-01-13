@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.overeasy.hiptodo.databinding.ActivityMainBinding
 import com.overeasy.hiptodo.function.ItemTouchHelperCallback
 import com.overeasy.hiptodo.model.ToDo
+import com.skydoves.rainbow.Rainbow
+import com.skydoves.rainbow.contextColor
 import java.util.*
 
 
@@ -57,6 +59,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        Rainbow(binding.constraintLayout).palette {
+
+        }.background()
         viewModel = ViewModelProvider(this, ViewModel.Factory(application)).get(ViewModel::class.java)
         viewModel.onCreate()
         adapter = MainAdapter()

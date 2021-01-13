@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">#6200EE</color> <!-- 타이틀 바 !-->
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <!-- 1 ~ 6 is bottom to top !-->
+    <!-- dawn1 !-->
+    <color name="dawn1_1">#FFAF00</color>
+    <color name="dawn1_2">#FFBF1D</color>
+    <color name="dawn1_3">#FFDB00</color>
+    <color name="dawn1_4">#2B307D</color>
+    <color name="dawn1_5">#151958</color>
+    <color name="dawn1_6">#0C1039</color>
+    <!-- dawn2 !-->
+    <color name="dawn2_1">#F1B351</color>
+    <color name="dawn2_2">#FFDB00</color>
+    <color name="dawn2_3">#FDE050</color>
+    <color name="dawn2_4">#5995B7</color>
+    <color name="dawn2_5">#151958</color>
+    <color name="dawn2_6">#062B79</color>
+    <!-- dawn3 !-->
+    <color name="dawn3_1">#F1B351</color>
+    <color name="dawn3_2">#FDE050</color>
+    <color name="dawn3_3">#FAFBBD</color>
+    <color name="dawn3_4">#74A6C2</color>
+    <color name="dawn3_5">#1E62BC</color>
+    <color name="dawn3_6">#0844BC</color>
+    <!-- dawn4 !-->
+    <color name="dawn4_1">#FDAC19</color>
+    <color name="dawn4_2">#F9DC98</color>
+    <color name="dawn4_3">#EBEACA</color>
+    <color name="dawn4_4">#91B9CF</color>
+    <color name="dawn4_5">#3F84E1</color>
+    <color name="dawn4_6">#276CF5</color>
+    <!-- day !-->
+    <color name="day_1">#019EF3</color>
+    <color name="day_2">#00B0FC</color>
+    <color name="day_3">#A4DFFD</color>
+    <color name="day_4">#76D3FE</color>
+    <color name="day_5">#56CAFB</color>
+    <color name="day_6">#02BEFD</color>
+    <!-- sunset1 !-->
+    <color name="sunset1_1">#FFAF00</color>
+    <color name="sunset1_2">#FFBF1D</color>
+    <color name="sunset1_3">#FFDB00</color>
+    <color name="sunset1_4">#2B307D</color>
+    <color name="sunset1_5">#151958</color>
+    <color name="sunset1_6">#0C1039</color>
+    <!-- sunset2 !-->
+    <color name="sunset2_1">#FFAF00</color>
+    <color name="sunset2_2">#FFBF1D</color>
+    <color name="sunset2_3">#FFDB00</color>
+    <color name="sunset2_4">#2B307D</color>
+    <color name="sunset2_5">#151958</color>
+    <color name="sunset2_6">#0C1039</color>
+    <!-- sunset3 !-->
+    <color name="sunset3_1">#FFAF00</color>
+    <color name="sunset3_2">#FFBF1D</color>
+    <color name="sunset3_3">#FFDB00</color>
+    <color name="sunset3_4">#2B307D</color>
+    <color name="sunset3_5">#151958</color>
+    <color name="sunset3_6">#0C1039</color>
+    <!-- sunset4 !-->
+    <color name="sunset4_1">#FFAF00</color>
+    <color name="sunset4_2">#FFBF1D</color>
+    <color name="sunset4_3">#FFDB00</color>
+    <color name="sunset4_4">#2B307D</color>
+    <color name="sunset4_5">#151958</color>
+    <color name="sunset4_6">#0C1039</color>
+    <!-- night !-->
+    <color name="night_1">#FFAF00</color>
+    <color name="night_2">#FFBF1D</color>
+    <color name="night_3">#FFDB00</color>
+    <color name="night_4">#2B307D</color>
+    <color name="night_5">#151958</color>
+    <color name="night_6">#0C1039</color>
 </resources>
