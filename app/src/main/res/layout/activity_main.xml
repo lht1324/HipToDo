@@ -37,12 +37,15 @@
                 android:ems="10"
                 android:hint="할 일 입력 후 ↵ 터치"
                 android:imeOptions="actionNone"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColorHint="#FFFFFF"
+                android:backgroundTint="#FFFFFF" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
