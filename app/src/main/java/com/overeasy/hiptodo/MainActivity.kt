@@ -33,14 +33,6 @@ class MainActivity : AppCompatActivity() {
     // 해야 할 것
     // Rx 적용
     // 리사이클러뷰가 비었으면 추가하는 법을 보여준다
-    // 시간이 지나면 자동으로 삭제되는 걸로 할까?
-    // 일단 기본은 자동삭제고 옵션으로 D+ 보여주기 넣으면 될 거 같은데
-    // 야 이 시발 이 앱 개발명 뭐야
-    // HipToDo 아냐
-    // + 같은 흔하디 흔한 건 넣을 수 없다
-    // ㅇㅋ?
-    // 잊어버리든 말든 알아서 하라 그래
-    // 지가 잊어버린 건데 뭐 어쩌라고
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,14 +51,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        // TimeTracker라는 객체를 만들고
-        // 라이브데이터를 이용해서 시간을 체크해보자
-        // 시간이 달라지면 함수를 실행하는 거지
-        // dawn1, dawn2... 이렇게 모아놓은 함수들
-        // 6 : 00 ~ 7 : 00, 18 : 00 ~ 19 : 00
-        // 이 사이에만 핸들러를 작동시키고
-        // 아니면 끄는 건 어때?
-
         viewModel = ViewModelProvider(this, ViewModel.Factory(application)).get(ViewModel::class.java)
         viewModel.onCreate()
         adapter = MainAdapter()

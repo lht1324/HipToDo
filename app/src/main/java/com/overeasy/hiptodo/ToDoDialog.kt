@@ -28,11 +28,8 @@ class ToDoDialog(private val mContext: Context) : Dialog(mContext) {
         binding.toDo = toDo
         binding.calendarView.minDate = System.currentTimeMillis()
 
-        // editText를 바꿔도 아이템이 안 바뀐다
         binding.calendarView.setOnDateChangeListener { _, year, month, day ->
             toDo.date = GregorianCalendar(year, month, day)
-            // 뷰모델 안에 있는 toDoList[position]의 something과 date를 바꿔준다
-            // 이걸 어디서 맡냐가 문제인데...
         }
 
         binding.editText.addTextChangedListener(object : TextWatcher {

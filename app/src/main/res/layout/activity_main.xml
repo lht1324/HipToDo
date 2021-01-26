@@ -34,12 +34,13 @@
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FFFFFF"
                 android:ems="10"
                 android:hint="할 일 입력 후 ↵ 터치"
                 android:imeOptions="actionNone"
                 android:singleLine="true"
-                android:textColorHint="#FFFFFF"
-                android:backgroundTint="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

@@ -37,45 +37,52 @@ class ViewModel(application: Application) : ViewModel() {
     fun onCreate() {
         if (toDoDao.getAll().isNotEmpty()) {
             toDoList.addAll(toDoDao.getAll())
-
-            /*
-            val tempPositions = ArrayList<Int>()
-            for (i in toDoList.indices) {
-                if (toDoList[i].date != null && toDoList[i].date!!.compareTo(GregorianCalendar()) == -1) {
-                    tempPositions.add(i)
-                    // 이걸 어떻게 하지?
-                    // removeAt으로 지우면 반복문 뻑나잖아
-                    // date가 이전 날짜인 position을 전부 기록한 다음에
-                    // 반복문 돌려서 없애버리는 걸로 할까?
-                    // tempPosition하고 비교하는 방법을 찾아야 한다
-                }
-            }
-            for (i in tempPositions.indices) {
-                toDoList.removeAt(tempPositions[i])
-
-                for (j in i + 1..tempPositions.size) {
-                    tempPositions[j] -= 1
-                }
-                // 근데 이것도 결국 안 되지 않냐?
-                // 한 번 할 때마다 -1씩 해줘야 하나?
-                // removeAt을 하고 나면 toDoList.size가 바뀌니까 tempPositions의 원소들도 쓸모가 없어진다
-                // tempPositions[i]도 사용하고 remove해야 하나?
-                // 그럼 반복문은 어떻게 돌리고?
-                // toDoList remove한 거는 중첩 반복으로 어찌 되는 거 아녔어?
-                // 일단 D+로 놓고 나중에 하는 걸로 하자
-                // 테스트 하려면 D+가 있어야 하는데 그거 하려면 하루 걸린다
-                // 앱 이름 바꾸는 걸로 여러 개 깔면 될 거 같긴 한데 결국 그것도 시간 걸려
-                // 일단 디자인부터 끝내고 보자
-            } */
+            
             for (i in toDoList.indices) {
                 if (toDoList[i].date != null)
-                    toDoList[i].day = (GregorianCalendar().timeInMillis - toDoList[i].date!!.timeInMillis) / 86400000 - 1
+                    toDoList[i].day = (GregorianCalendar(
+                        GregorianCalendar().get(Calendar.YEAR),
+                        GregorianCalendar().get(Calendar.MONTH),
+                        GregorianCalendar().get(Calendar.DAY_OF_MONTH)).timeInMillis - toDoList[i].date!!.timeInMillis) / 86400000
+
+                // 시간을 0시 0분으로 설정하지 않으면 timeInMillis 계산 후 86400000으로 나눌 때 반올림 때문에 숫자가 이상해진다
+                // 그래서 GregorianCalendar(year, month, day) 형식을 사용
+            }
+
+            var finish = false
+
+            while (!finish) {
+
+                for (i in toDoList.indices) {
+                    if (toDoList[i].date != null && toDoList[i].day!! > 0L) {
+                        toDoDao.delete(toDoList[i])
+                        toDoList.removeAt(i)
+                        break
+                    }
+                }
+                // delete 뒤 break하면 size는 1 줄어든다
+
+                if (toDoList.size == 0)
+                    break
+                // 처음 1개 있던 게 D+가 되어서 지워지면 반복문을 종료한다
+
+                for (i in toDoList.indices) { // 선행 for문이 조건을 만족했을 때 size는 1 줄어든 상태
+                    if (toDoList[i].date != null && toDoList[i].day !! > 0L)
+                        break
+                    if (i == toDoList.size - 1 && toDoList[i].day!! <= 0L) // < 0L이면 D데이도 포함 안 되잖아
+                        finish = true
+                }
+                // 드래그 앤 드랍으로 옮기고 나서 다이얼로그를 열면
+                // 옮긴 뒤 기존의 위치에 있는 ToDo가 읽혀온다
             }
         }
         else {
             toDoList.add(ToDo("ToDo"))
-            toDoList[0].date = GregorianCalendar()
-            toDoList[0].day = toDoList[0].date!!.timeInMillis / 86400000 - 1
+            toDoList[0].date = GregorianCalendar(
+                GregorianCalendar().get(Calendar.YEAR),
+                GregorianCalendar().get(Calendar.MONTH),
+                GregorianCalendar().get(Calendar.DAY_OF_MONTH)) // 당일 00시 00분으로 설정
+            toDoList[0].day = 0L
             toDoDao.insert(toDoList[0])
             toDoLiveData.value = toDoList
         }
@@ -98,7 +105,10 @@ class ViewModel(application: Application) : ViewModel() {
         for (i in toDoList.indices) {
             if (toDoList[i].id == toDo.id) {
                 toDoList[i] = toDo
-                toDoList[i].day = (GregorianCalendar().timeInMillis - toDo.date!!.timeInMillis) / 86400000 - 1
+                toDoList[i].day = (GregorianCalendar(
+                    GregorianCalendar().get(Calendar.YEAR),
+                    GregorianCalendar().get(Calendar.MONTH),
+                    GregorianCalendar().get(Calendar.DAY_OF_MONTH)).timeInMillis - toDo.date!!.timeInMillis) / 86400000
             }
         }
         toDoDao.update(toDo)

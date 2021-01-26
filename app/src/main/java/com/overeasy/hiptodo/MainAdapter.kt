@@ -54,13 +54,14 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         tempArrayList.add(beforePosition)
         tempArrayList.add(afterPosition)
         onItemMoved.value = tempArrayList
-        // 그냥 여기서 스왑하는 걸 실행해버릴까?
-        // 아냐
-        // 결국 필요한 건 beforePosition하고 afterPosition이잖아
-        // 이 두 놈을 뷰모델에 보내야 한다는 건데
-        // 여기서 실행하는 건 나쁘지 않은데
-        // 혹시 액티비티에 있는 setItems랑 겹치진 않을까?
         notifyItemMoved(beforePosition, afterPosition)
+        // 움직이는 애니메이션이 종료된 후에 데이터가 변경되어야 하는데
+        // 이렇게 하면 애니메이션 도중 데이터가 변경되고 애니메이션은 강제종료된다
+        // notifyDataSetChanged()
+        // 데이터바인딩으로 onClick()을 할 때 아이템에 있는 toDo를 사용하잖아?
+        // 포지션을 옮긴 뒤 onClick()에 이전에 그 포지션에 있던 toDo가 사용된다는 건
+        // 옮겨진 position이 View와 동기화되지 않았다는 소리야
+        // 어디에서 안 된 거지?
     }
 
     fun changeMoveEvent() {
@@ -82,6 +83,13 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
         fun onClick(toDo: ToDo) {
             onItemClicked(toDo)
+            println("${toDo.something}'s position = $adapterPosition")
+            // 포지션 변경이 반영되기 전에 터치해서 기존 아이템이 나온 거 같은데?
+            // showDialog에 들어가는 거 어떤 어레이에서 나온 거냐
+            // 그 어레이가 옮긴 다음 바로 변경 안 되니까 이런 거다
+            // 아니지
+            // onClick 할 때 들어가는 건 아이템에 데이터바인딩으로 묶인 거야
+            // 포지션 변경 반영 전에 onClick에 묶인 게 들어가면 이전 게 들어가지
         }
 
         fun deleteToDo(toDo: ToDo) {
@@ -91,23 +99,10 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         fun showDeadline(toDo: ToDo): String {
             val dateToday = GregorianCalendar()
             val dateOrigin: Calendar? = if (toDo.date == null) null else toDo.date
-            var year by Delegates.notNull<Boolean>()
-            var month by Delegates.notNull<Boolean>()
-            var day by Delegates.notNull<Boolean>()
-
-            if (dateOrigin != null) {
-                year = dateToday.get(Calendar.YEAR) == dateOrigin.get(Calendar.YEAR)
-                month = dateToday.get(Calendar.MONTH) == dateOrigin.get(Calendar.MONTH)
-                day = dateToday.get(Calendar.DATE) == dateOrigin.get(Calendar.DATE)
-            }
-            // 다이얼로그 둥근 모서리 적용하니까
-            // 둥근 모서리는 나오지도 않는다
-            // D+로 출력하는 것도 넣어야겠다
-            // 그냥 minDate 해제할까?
 
             return when {
                 dateOrigin == null -> ""
-                year && month && day -> "D-Day"
+                toDo.day == 0L -> "D-Day"
                 dateOrigin.compareTo(dateToday) == 1 || dateOrigin.compareTo(dateToday) == -1 -> "D${String.format("%+d", toDo.day)}"
                 else -> "Error!"
             }
@@ -116,6 +111,7 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     fun setItems(toDoList: ArrayList<ToDo>) {
         this.toDoList = toDoList
+        notifyDataSetChanged()
     }
 
     fun println(data: String) {
