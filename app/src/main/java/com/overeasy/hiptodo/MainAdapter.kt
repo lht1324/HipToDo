@@ -39,11 +39,11 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         return toDoList.size
     }
 
-    fun onItemDragMove(beforePosition: Int, afterPosition: Int) {
+    fun onItemMove(beforePosition: Int, afterPosition: Int) {
         if (beforePosition < afterPosition) {
-            for (i in beforePosition until afterPosition)
+            for (i in beforePosition until afterPosition) {
                 Collections.swap(toDoList, i, i + 1)
-            // ViewModel도 바꿔줘야 한다
+            }
         }
         else {
             for (i in beforePosition downTo afterPosition + 1) {
@@ -62,6 +62,8 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         // 포지션을 옮긴 뒤 onClick()에 이전에 그 포지션에 있던 toDo가 사용된다는 건
         // 옮겨진 position이 View와 동기화되지 않았다는 소리야
         // 어디에서 안 된 거지?
+        // 이동 -> 뷰가 이동해서 자리 잡음 -> 터치 -> 기존 포지션에 현재 있는 놈 정보 불러옴 ->
+        // 바인드 -> toDo와 뷰홀더 삽입 ->
     }
 
     fun changeMoveEvent() {

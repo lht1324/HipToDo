@@ -69,9 +69,10 @@ class ViewModel(application: Application) : ViewModel() {
                 for (i in toDoList.indices) { // 선행 for문이 조건을 만족했을 때 size는 1 줄어든 상태
                     if (toDoList[i].date != null && toDoList[i].day !! > 0L)
                         break
-                    if (i == toDoList.size - 1 && toDoList[i].day!! <= 0L) // < 0L이면 D데이도 포함 안 되잖아
+                    if (i == toDoList.size - 1 && (toDoList[i].date == null || (toDoList[i].date != null && toDoList[i].day!! <= 0L))) // < 0L이면 D데이도 포함 안 되잖아
                         finish = true
                 }
+                // toDoList 내부에 있는 null이 아닌 모든 date가 0L 이하라면
                 // 드래그 앤 드랍으로 옮기고 나서 다이얼로그를 열면
                 // 옮긴 뒤 기존의 위치에 있는 ToDo가 읽혀온다
             }
@@ -105,10 +106,11 @@ class ViewModel(application: Application) : ViewModel() {
         for (i in toDoList.indices) {
             if (toDoList[i].id == toDo.id) {
                 toDoList[i] = toDo
-                toDoList[i].day = (GregorianCalendar(
+                toDoList[i].day = if (toDo.date != null) (GregorianCalendar(
                     GregorianCalendar().get(Calendar.YEAR),
                     GregorianCalendar().get(Calendar.MONTH),
                     GregorianCalendar().get(Calendar.DAY_OF_MONTH)).timeInMillis - toDo.date!!.timeInMillis) / 86400000
+                else null
             }
         }
         toDoDao.update(toDo)

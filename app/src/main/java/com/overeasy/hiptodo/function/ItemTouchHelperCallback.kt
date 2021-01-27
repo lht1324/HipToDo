@@ -13,13 +13,14 @@ class ItemTouchHelperCallback(private val mAdapter: MainAdapter) : ItemTouchHelp
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-        mAdapter.onItemDragMove(viewHolder.adapterPosition, target.adapterPosition)
+        mAdapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
     }
+
 
     override fun isLongPressDragEnabled(): Boolean {
         return true
@@ -50,5 +51,11 @@ class ItemTouchHelperCallback(private val mAdapter: MainAdapter) : ItemTouchHelp
         super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
 
         isMoved = true
+    }
+
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+        super.clearView(recyclerView, viewHolder)
+
+        mAdapter.notifyDataSetChanged()
     }
 }
