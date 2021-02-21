@@ -94,8 +94,6 @@
                     app:layout_constraintLeft_toRightOf="@id/constraintLayout"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_delete" />
-                <!--얘도 결국 옵저버로 처리해야 할 건데 그냥 뷰홀더 안에 라이브데이터 놓을까? -->
-                <!-- onItemDeleted 같은 거 onItemClicked랑 비슷하게 만들면 되잖아 -->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

@@ -33,10 +33,14 @@ class MainActivity : AppCompatActivity() {
     // 해야 할 것
     // Rx 적용
     // 리사이클러뷰가 비었으면 추가하는 법을 보여준다
+    // 처음 시작하면 사용법을 보여준다
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val editor = getSharedPreferences("restartCheck", MODE_PRIVATE).edit()
+        editor.putBoolean("restartApp", true)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         init()

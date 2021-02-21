@@ -76,6 +76,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "com.google.android.material:material:1.2.1"
     implementation "com.github.skydoves:rainbow:1.0.3"
+    implementation "com.github.paolorotolo:appintro:4.1.0"
 
     // Rx components
     implementation "io.reactivex.rxjava2:rxjava:2.2.19"
@@ -88,6 +89,7 @@ dependencies {
     // Room components
     implementation "androidx.room:room-runtime:2.2.5"
     implementation "androidx.room:room-ktx:2.2.5"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:2.2.5"
     androidTestImplementation "androidx.room:room-testing:2.2.5"
 
