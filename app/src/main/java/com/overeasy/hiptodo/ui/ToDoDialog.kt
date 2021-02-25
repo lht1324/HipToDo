@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo
+package com.overeasy.hiptodo.ui
 
 import android.app.Dialog
 import android.content.Context
@@ -7,8 +7,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.WindowManager
-import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import com.overeasy.hiptodo.R
 import com.overeasy.hiptodo.databinding.TodoDialogBinding
 import com.overeasy.hiptodo.model.ToDo
 import java.util.*
@@ -23,7 +23,8 @@ class ToDoDialog(private val mContext: Context) : Dialog(mContext) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.todo_dialog, null, false)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
+            R.layout.todo_dialog, null, false)
 
         binding.toDo = toDo
         binding.calendarView.minDate = System.currentTimeMillis()

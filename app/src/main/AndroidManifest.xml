@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- SplashActivity-->
-        <activity android:name=".SplashActivity">
+        <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,12 +19,12 @@
         </activity>
         <!-- IntroActivity-->
         <activity
-            android:name=".IntroActivity"
+            android:name=".ui.IntroActivity"
             >
         </activity>
         <!-- MainActivity-->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             >
         </activity>
         <meta-data

@@ -1,9 +1,10 @@
-package com.overeasy.hiptodo
+package com.overeasy.hiptodo.ui
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.overeasy.hiptodo.R
 
 class SplashActivity : Activity() {
     override fun onCreate(savedStatedBundle: Bundle?) {
@@ -11,7 +12,7 @@ class SplashActivity : Activity() {
 
         setContentView(R.layout.activity_splash)
 
-        Thread.sleep(2500)
+        Thread.sleep(3000)
 
         val pref = getSharedPreferences("restartCheck", MODE_PRIVATE)
         val restartApp = pref.getBoolean("restartApp", false)

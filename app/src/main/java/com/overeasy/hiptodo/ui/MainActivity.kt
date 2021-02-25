@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo
+package com.overeasy.hiptodo.ui
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -15,12 +14,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.overeasy.hiptodo.R
+import com.overeasy.hiptodo.ViewModel
 import com.overeasy.hiptodo.databinding.ActivityMainBinding
 import com.overeasy.hiptodo.function.ItemTouchHelperCallback
 import com.overeasy.hiptodo.model.ToDo
-import com.skydoves.rainbow.Rainbow
-import com.skydoves.rainbow.RainbowOrientation
-import com.skydoves.rainbow.contextColor
 import java.util.*
 
 

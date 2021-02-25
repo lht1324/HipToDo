@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo
+package com.overeasy.hiptodo.ui
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import com.overeasy.hiptodo.databinding.TodoItemBinding
 import com.overeasy.hiptodo.model.ToDo
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.properties.Delegates
 
 class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
     private lateinit var toDoList: ArrayList<ToDo>
@@ -55,15 +54,6 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         tempArrayList.add(afterPosition)
         onItemMoved.value = tempArrayList
         notifyItemMoved(beforePosition, afterPosition)
-        // 움직이는 애니메이션이 종료된 후에 데이터가 변경되어야 하는데
-        // 이렇게 하면 애니메이션 도중 데이터가 변경되고 애니메이션은 강제종료된다
-        // notifyDataSetChanged()
-        // 데이터바인딩으로 onClick()을 할 때 아이템에 있는 toDo를 사용하잖아?
-        // 포지션을 옮긴 뒤 onClick()에 이전에 그 포지션에 있던 toDo가 사용된다는 건
-        // 옮겨진 position이 View와 동기화되지 않았다는 소리야
-        // 어디에서 안 된 거지?
-        // 이동 -> 뷰가 이동해서 자리 잡음 -> 터치 -> 기존 포지션에 현재 있는 놈 정보 불러옴 ->
-        // 바인드 -> toDo와 뷰홀더 삽입 ->
     }
 
     fun changeMoveEvent() {
@@ -86,12 +76,6 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         fun onClick(toDo: ToDo) {
             onItemClicked(toDo)
             println("${toDo.something}'s position = $adapterPosition")
-            // 포지션 변경이 반영되기 전에 터치해서 기존 아이템이 나온 거 같은데?
-            // showDialog에 들어가는 거 어떤 어레이에서 나온 거냐
-            // 그 어레이가 옮긴 다음 바로 변경 안 되니까 이런 거다
-            // 아니지
-            // onClick 할 때 들어가는 건 아이템에 데이터바인딩으로 묶인 거야
-            // 포지션 변경 반영 전에 onClick에 묶인 게 들어가면 이전 게 들어가지
         }
 
         fun deleteToDo(toDo: ToDo) {

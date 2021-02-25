@@ -1,11 +1,11 @@
-package com.overeasy.hiptodo
+package com.overeasy.hiptodo.ui
 
+import com.overeasy.hiptodo.R
 import com.overeasy.hiptodo.databinding.ActivityMainBinding
 import com.skydoves.rainbow.Rainbow
 import com.skydoves.rainbow.RainbowOrientation
 import com.skydoves.rainbow.contextColor
 import java.util.*
-import kotlin.properties.Delegates
 
 class BackgroundMaker(private val binding: ActivityMainBinding) {
     fun compareTime() {
