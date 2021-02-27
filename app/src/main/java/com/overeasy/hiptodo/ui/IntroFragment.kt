@@ -1,5 +1,6 @@
 package com.overeasy.hiptodo.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +15,9 @@ import com.overeasy.hiptodo.databinding.FragmentIntroBinding
 class IntroFragment(
     private val title: String,
     private val description: String,
-    private val image: Int,
-    private val backgroundColor: Int) : Fragment() {
+    private val image: Int?,
+    private val backgroundColor: Int,
+    private val descriptionColor: String) : Fragment() {
     private lateinit var binding: FragmentIntroBinding
     val backgroundColorSave = backgroundColor
 
@@ -27,6 +29,9 @@ class IntroFragment(
             Glide.with(this@IntroFragment).load(image).into(imageView)
             description = this@IntroFragment.description
             constraintLayout.setBackgroundColor(resources.getColor(backgroundColor))
+
+            if (descriptionColor != "")
+                textView3.setTextColor(Color.parseColor(descriptionColor))
         }
         return binding.root
     }

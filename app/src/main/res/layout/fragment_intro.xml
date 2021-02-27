@@ -15,12 +15,14 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="70dp"
+            android:gravity="center_horizontal"
             android:text="@{title}"
             android:textSize="48sp"
             app:layout_constraintBottom_toTopOf="@+id/imageView"
@@ -32,8 +34,8 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toTopOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_horizontal"
             android:layout_marginBottom="120dp"
+            android:gravity="center_horizontal"
             android:text="@{description}"
             android:textSize="34sp"
             app:layout_constraintBottom_toBottomOf="parent"

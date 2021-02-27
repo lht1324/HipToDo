@@ -17,7 +17,6 @@ class SplashActivity : Activity() {
         val pref = getSharedPreferences("restartCheck", MODE_PRIVATE)
         val restartApp = pref.getBoolean("restartApp", false)
 
-        println("restartApp= $restartApp")
         if (restartApp)
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         else
@@ -30,7 +29,7 @@ class SplashActivity : Activity() {
         //초반 플래시 화면에서 넘어갈 때 뒤로가기 버튼 못 누르게 함
     }
 
-    fun println(data: String) {
+    private fun println(data: String) {
         Log.d("SplashActivity", data)
     }
 }

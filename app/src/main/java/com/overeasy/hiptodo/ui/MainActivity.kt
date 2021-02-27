@@ -27,29 +27,42 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: ViewModel
     private lateinit var adapter: MainAdapter
     private lateinit var inputMethodManager: InputMethodManager
+    private var backPressedLast: Long = 0
 
     // 해야 할 것
     // Rx 적용
     // 리사이클러뷰가 비었으면 추가하는 법을 보여준다
-    // 처음 시작하면 사용법을 보여준다
+    // 사용법 UI 가다듬기
+    // 로고 만들기
+    // 뒤로 가기 토스트 띄우기
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val editor = getSharedPreferences("restartCheck", MODE_PRIVATE).edit()
-        editor.putBoolean("restartApp", true)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         init()
     }
 
+    override fun onStop() {
+        super.onStop()
+
+        val editor = getSharedPreferences("restartCheck", MODE_PRIVATE).edit()
+        editor.putBoolean("restartApp", true)
+        editor.apply()
+    }
+
     override fun onBackPressed() {
         viewModel.publishSubject.onComplete()
-        toast("종료하려면 뒤로 가기 버튼을 한 번 더 눌러주세요.")
 
-        finish()
-        super.onBackPressed()
+        if (System.currentTimeMillis() - backPressedLast < 2000) {
+            finish()
+            return
+        }
+
+        Toast.makeText(this, "종료하려면 뒤로 가기 버튼을\n한 번 더 눌러주세요.", Toast.LENGTH_SHORT).show()
+        backPressedLast = System.currentTimeMillis()
     }
 
     private fun init() {
@@ -115,9 +128,5 @@ class MainActivity : AppCompatActivity() {
 
     private fun println(data: String) {
         Log.d("MainActivity", data)
-    }
-
-    private fun toast(data: String) {
-        Toast.makeText(this, data, Toast.LENGTH_SHORT)
     }
 }

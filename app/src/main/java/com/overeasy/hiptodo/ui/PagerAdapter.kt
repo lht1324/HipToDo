@@ -11,6 +11,4 @@ class PagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fr
     override fun getItemCount(): Int = fragments.size
 
     override fun createFragment(position: Int): Fragment = fragments[position]
-
-    fun getColor(position: Int) : Int = fragments[position].backgroundColorSave
 }
