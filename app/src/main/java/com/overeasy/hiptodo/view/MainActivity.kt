@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     // 로고 만들기
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Thread.sleep(1000)
+        Thread.sleep(1500)
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
