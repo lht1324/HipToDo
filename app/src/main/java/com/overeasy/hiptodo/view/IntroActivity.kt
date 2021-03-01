@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.ui
+package com.overeasy.hiptodo.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -81,9 +81,16 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun startMainActivity() {
-        val intent = Intent(this@IntroActivity, MainActivity::class.java)
-        startActivity(intent)
+        val pref = getSharedPreferences("restartCheck", MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putBoolean("restartApp", true)
+        editor.apply()
+        startActivity(Intent(applicationContext, MainActivity::class.java))
         finish()
+        // 여기 같은데
+        // 메인에서 2번 꺼야 앱 꺼지는 거
+        // MainActivity -> IntroActivity -> MainActivity
+        // 여기서 Intro는 finish()가 됐는데 Main이 안 된 거잖아
     }
 
     override fun onBackPressed() {

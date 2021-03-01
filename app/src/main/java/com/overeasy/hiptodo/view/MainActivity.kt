@@ -1,5 +1,6 @@
-package com.overeasy.hiptodo.ui
+package com.overeasy.hiptodo.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -30,18 +31,21 @@ class MainActivity : AppCompatActivity() {
     private var backPressedLast: Long = 0
 
     // 해야 할 것
-    // Rx 적용
-    // 리사이클러뷰가 비었으면 추가하는 법을 보여준다
-    // 사용법 UI 가다듬기
     // 로고 만들기
-    // 뒤로 가기 토스트 띄우기
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Thread.sleep(1000)
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val pref = getSharedPreferences("restartCheck", MODE_PRIVATE)
+        val restartApp = pref.getBoolean("restartApp", false)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        if (!restartApp)
+            startIntroActivity()
+
+       binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         init()
     }
 
@@ -84,6 +88,9 @@ class MainActivity : AppCompatActivity() {
             viewModel = viewModel
             lifecycleOwner = this@MainActivity
             editText.setOnKeyListener(addToDo)
+            helpButton.setOnClickListener {
+                startIntroActivity()
+            }
         }
 
         adapter.onItemClicked.observe(this, { clickedModel ->
@@ -124,6 +131,11 @@ class MainActivity : AppCompatActivity() {
         }
         toDoDialog.setCancelable(true)
         toDoDialog.show()
+    }
+
+    private fun startIntroActivity() {
+        startActivity(Intent(this, IntroActivity::class.java))
+        finish()
     }
 
     private fun println(data: String) {

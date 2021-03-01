@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.ui
+package com.overeasy.hiptodo.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

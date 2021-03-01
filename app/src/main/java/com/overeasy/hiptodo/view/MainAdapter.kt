@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.ui
+package com.overeasy.hiptodo.view
 
 import android.util.Log
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.ui
+package com.overeasy.hiptodo.view
 
 import com.overeasy.hiptodo.R
 import com.overeasy.hiptodo.databinding.ActivityMainBinding
