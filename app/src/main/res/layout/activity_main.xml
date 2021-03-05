@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.overeasy.hiptodo.ViewModel" />
+            type="com.overeasy.simpletodo.ViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

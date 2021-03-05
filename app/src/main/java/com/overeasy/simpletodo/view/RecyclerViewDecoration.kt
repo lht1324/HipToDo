@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.view
+package com.overeasy.simpletodo.view
 
 import android.graphics.Rect
 import android.view.View

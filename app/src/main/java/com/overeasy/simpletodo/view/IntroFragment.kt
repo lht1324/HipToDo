@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.view
+package com.overeasy.simpletodo.view
 
 import android.graphics.Color
 import android.os.Bundle
@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.overeasy.hiptodo.R
-import com.overeasy.hiptodo.databinding.FragmentIntroBinding
+import com.overeasy.simpletodo.R
+import com.overeasy.simpletodo.databinding.FragmentIntroBinding
 
 
 class IntroFragment(

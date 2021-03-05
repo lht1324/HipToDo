@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo
+package com.overeasy.simpletodo
 
 import org.junit.Test
 

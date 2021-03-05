@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.view
+package com.overeasy.simpletodo.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

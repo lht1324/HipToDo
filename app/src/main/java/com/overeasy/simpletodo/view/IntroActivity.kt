@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.view
+package com.overeasy.simpletodo.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.widget.ViewPager2
-import com.overeasy.hiptodo.R
-import com.overeasy.hiptodo.databinding.ActivityIntroBinding
+import com.overeasy.simpletodo.R
+import com.overeasy.simpletodo.databinding.ActivityIntroBinding
 
 
 class IntroActivity : AppCompatActivity() {

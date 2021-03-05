@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.view
+package com.overeasy.simpletodo.view
 
 import android.content.Intent
 import android.graphics.Color
@@ -15,11 +15,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.overeasy.hiptodo.R
-import com.overeasy.hiptodo.ViewModel
-import com.overeasy.hiptodo.databinding.ActivityMainBinding
-import com.overeasy.hiptodo.function.ItemTouchHelperCallback
-import com.overeasy.hiptodo.model.ToDo
+import com.overeasy.simpletodo.R
+import com.overeasy.simpletodo.ViewModel
+import com.overeasy.simpletodo.databinding.ActivityMainBinding
+import com.overeasy.simpletodo.function.ItemTouchHelperCallback
+import com.overeasy.simpletodo.model.ToDo
 import java.util.*
 
 

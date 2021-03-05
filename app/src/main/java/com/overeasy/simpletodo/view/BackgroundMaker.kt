@@ -1,7 +1,7 @@
-package com.overeasy.hiptodo.view
+package com.overeasy.simpletodo.view
 
-import com.overeasy.hiptodo.R
-import com.overeasy.hiptodo.databinding.ActivityMainBinding
+import com.overeasy.simpletodo.R
+import com.overeasy.simpletodo.databinding.ActivityMainBinding
 import com.skydoves.rainbow.Rainbow
 import com.skydoves.rainbow.RainbowOrientation
 import com.skydoves.rainbow.contextColor

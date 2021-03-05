@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.model
+package com.overeasy.simpletodo.model
 
 import android.util.Log
 import androidx.room.TypeConverter

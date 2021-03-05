@@ -1,8 +1,8 @@
-package com.overeasy.hiptodo.function
+package com.overeasy.simpletodo.function
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.overeasy.hiptodo.view.MainAdapter
+import com.overeasy.simpletodo.view.MainAdapter
 
 class ItemTouchHelperCallback(private val mAdapter: MainAdapter) : ItemTouchHelper.Callback() {
     private var isMoved = false

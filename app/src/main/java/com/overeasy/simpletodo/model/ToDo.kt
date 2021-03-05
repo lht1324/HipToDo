@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.model
+package com.overeasy.simpletodo.model
 
 import androidx.room.Entity
 import androidx.room.Ignore

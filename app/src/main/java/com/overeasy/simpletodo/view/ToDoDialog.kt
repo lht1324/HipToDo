@@ -1,4 +1,4 @@
-package com.overeasy.hiptodo.view
+package com.overeasy.simpletodo.view
 
 import android.app.Dialog
 import android.content.Context
@@ -8,9 +8,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
-import com.overeasy.hiptodo.R
-import com.overeasy.hiptodo.databinding.TodoDialogBinding
-import com.overeasy.hiptodo.model.ToDo
+import com.overeasy.simpletodo.R
+import com.overeasy.simpletodo.databinding.TodoDialogBinding
+import com.overeasy.simpletodo.model.ToDo
 import java.util.*
 
 class ToDoDialog(private val mContext: Context) : Dialog(mContext) {

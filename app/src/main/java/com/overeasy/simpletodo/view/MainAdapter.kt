@@ -1,12 +1,12 @@
-package com.overeasy.hiptodo.view
+package com.overeasy.simpletodo.view
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.overeasy.hiptodo.databinding.TodoItemBinding
-import com.overeasy.hiptodo.model.ToDo
+import com.overeasy.simpletodo.databinding.TodoItemBinding
+import com.overeasy.simpletodo.model.ToDo
 import java.util.*
 import kotlin.collections.ArrayList
 

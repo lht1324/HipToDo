@@ -1,18 +1,16 @@
-package com.overeasy.hiptodo
+package com.overeasy.simpletodo
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.properties.Delegates
 import androidx.lifecycle.ViewModelProvider
-import com.overeasy.hiptodo.model.ToDo
-import com.overeasy.hiptodo.model.ToDoDao
-import com.overeasy.hiptodo.model.ToDoDatabase
+import com.overeasy.simpletodo.model.ToDo
+import com.overeasy.simpletodo.model.ToDoDao
+import com.overeasy.simpletodo.model.ToDoDatabase
 
 class ViewModel(application: Application) : ViewModel() {
     var toDoList = ArrayList<ToDo>()

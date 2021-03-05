@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.overeasy.hiptodo">
+    package="com.overeasy.simpletodo">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -16,11 +16,11 @@
         </activity> -->
 
         <!-- IntroActivity-->
-        <activity android:name=".view.IntroActivity">
+        <activity android:name="com.overeasy.simpletodo.view.IntroActivity">
         </activity>
 
         <!-- MainActivity-->
-        <activity android:name=".view.MainActivity"
+        <activity android:name="com.overeasy.simpletodo.view.MainActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

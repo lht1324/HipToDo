@@ -5,10 +5,10 @@
     <data>
         <variable
             name="viewHolder"
-            type="com.overeasy.hiptodo.view.MainAdapter.ViewHolder" />
+            type="com.overeasy.simpletodo.view.MainAdapter.ViewHolder" />
         <variable
             name="toDo"
-            type="com.overeasy.hiptodo.model.ToDo" />
+            type="com.overeasy.simpletodo.model.ToDo" />
     </data>
 
     <LinearLayout
