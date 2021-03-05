@@ -20,10 +20,6 @@ class ToDo {
         this.something = something
         this.date = null
     }
-
-    /* @Ignore
-    constructor(something: String, date: Calendar) {
-        this.something = something
-        this.date = date
-    } */
+    // If two or more constructors are defined in an entity of Room, kaptDebugError is occurred.
+    // Room의 엔티티에서 constructor를 2개 이상 정의하면 kaptDebugError가 발생한다
 }

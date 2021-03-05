@@ -14,11 +14,6 @@ class Converters {
                 date.timeInMillis = value
                 date
             } else null
-            // 일단 켜지긴 하는데 다시 켰을 때 날짜를 못 읽어온다
-            // 저장되는 게 잘못된 거 아냐?
-            /* val date = GregorianCalendar()
-            date.timeInMillis = value!! // NPE
-            return if (value != null) date else null */
         }
         @JvmStatic
         @TypeConverter

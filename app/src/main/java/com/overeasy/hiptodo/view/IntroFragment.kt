@@ -19,15 +19,19 @@ class IntroFragment(
     private val backgroundColor: Int,
     private val descriptionColor: String) : Fragment() {
     private lateinit var binding: FragmentIntroBinding
-    val backgroundColorSave = backgroundColor
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_intro, container, false)
 
+        // 데이터바인딩 초기화
         binding.apply {
             title = this@IntroFragment.title
-            Glide.with(this@IntroFragment).load(image).into(imageView)
             description = this@IntroFragment.description
+
+            // Use Glide to show gif file
+            // gif 파일 재생을 위해 Glide 사용
+            Glide.with(this@IntroFragment).load(image).into(imageView)
+
             constraintLayout.setBackgroundColor(resources.getColor(backgroundColor))
 
             if (descriptionColor != "")

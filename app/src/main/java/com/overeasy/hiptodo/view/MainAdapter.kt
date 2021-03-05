@@ -14,7 +14,7 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
     private lateinit var toDoList: ArrayList<ToDo>
     var onItemClicked = MutableLiveData<ToDo>()
     var onItemDeleted = MutableLiveData<ToDo>()
-    var onItemMoved = MutableLiveData<ArrayList<Int>>() // ArrayList 통으로 옮겨야 하는 거 아냐?
+    var onItemMoved = MutableLiveData<ArrayList<Int>>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -22,9 +22,13 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
         return ViewHolder(binding,
             onItemClicked = { toDo ->
+                // Check that item is touched
+                // 항목이 터치되었는지 체크
                 onItemClicked.value = toDo
             },
             onItemDeleted = { toDo ->
+                // Check that delete button is touched
+                // 삭제 버튼이 터치되었는지 체크
                 onItemDeleted.value = toDo
             }
         )
@@ -38,6 +42,7 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         return toDoList.size
     }
 
+    // Drag and drop item
     fun onItemMove(beforePosition: Int, afterPosition: Int) {
         if (beforePosition < afterPosition) {
             for (i in beforePosition until afterPosition) {
@@ -66,6 +71,8 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         private val onItemDeleted: (ToDo) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        // Insert value into data binding
+        // 데이터바인딩에 변수 삽입
         fun bind(toDo: ToDo) {
             binding.viewHolder = this
             binding.toDo = toDo
@@ -73,15 +80,20 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
             binding.executePendingBindings()
         }
 
+        // Action when item is touched
+        // 항목 터치 시 동작
         fun onClick(toDo: ToDo) {
             onItemClicked(toDo)
-            println("${toDo.something}'s position = $adapterPosition")
         }
 
+        // Action when delete button is touched
+        // 항목의 삭제 버튼 터치 시 동작
         fun deleteToDo(toDo: ToDo) {
             onItemDeleted(toDo)
         }
 
+        // Return D-Day after comparing date
+        // 날짜 비교 후 D-Day를 출력
         fun showDeadline(toDo: ToDo): String {
             val dateToday = GregorianCalendar()
             val dateOrigin: Calendar? = if (toDo.date == null) null else toDo.date
@@ -100,6 +112,8 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
+    // For log checking
+    // 로그 확인용
     fun println(data: String) {
         Log.d("MainAdapter", data)
     }

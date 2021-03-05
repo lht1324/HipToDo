@@ -29,10 +29,13 @@ class ToDoDialog(private val mContext: Context) : Dialog(mContext) {
         binding.toDo = toDo
         binding.calendarView.minDate = System.currentTimeMillis()
 
+        // CalendarView date change listener
         binding.calendarView.setOnDateChangeListener { _, year, month, day ->
             toDo.date = GregorianCalendar(year, month, day)
         }
 
+        // Change toDo's 'something(String)' when the enter key is pressed during input in editText
+        // editText에서 입력 중 엔터 키가 입력되면 toDo의 할 일 변경
         binding.editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 toDo.something = p0.toString()
@@ -49,6 +52,7 @@ class ToDoDialog(private val mContext: Context) : Dialog(mContext) {
         init()
     }
 
+    // Dialog layout setting
     private fun init() {
         layoutParams = WindowManager.LayoutParams()
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND

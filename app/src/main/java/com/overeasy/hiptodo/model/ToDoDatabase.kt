@@ -33,20 +33,3 @@ abstract class ToDoDatabase : RoomDatabase() {
         }
     }
 }
-/* companion object {
-       @Volatile
-       private var INSTANCE: ToDoDatabase? = null
-
-       fun getInstance(context: Context) : ToDoDatabase? {
-           if (INSTANCE == null) {
-               synchronized(this) {
-                   INSTANCE = Room.databaseBuilder(
-                       context.applicationContext,
-                       ToDoDatabase::class.java,
-                       "todo_database"
-                   ).build()
-               }
-           }
-           return INSTANCE
-       }
-   } */

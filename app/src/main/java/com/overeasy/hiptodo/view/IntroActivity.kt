@@ -37,8 +37,10 @@ class IntroActivity : AppCompatActivity() {
         binding.apply {
             val liveData = MutableLiveData<Int>()
 
+            // Show page number at the bottom according to page number
+            // 현재 페이지에 따라 아래쪽의 페이지 번호를 보여주거나 가린다
             liveData.observe(this@IntroActivity, { position ->
-                if (position == 0 || position == adapter.fragments.size - 1) { // 4/4 지워야 한다
+                if (position == 0 || position == adapter.fragments.size - 1) {
                     textView.visibility = View.INVISIBLE
                     textView2.visibility = View.INVISIBLE
                     textView3.visibility = View.INVISIBLE
@@ -51,6 +53,8 @@ class IntroActivity : AppCompatActivity() {
                 }
             })
 
+            // Change page number when changing page
+            // 페이지 변경 시 페이지 수도 변경
             viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
@@ -60,18 +64,27 @@ class IntroActivity : AppCompatActivity() {
             })
 
             viewPager.adapter = adapter
-            buttonDone.setOnClickListener { startMainActivity() }
+
+            // Skip button
+            buttonSkip.setOnClickListener { startMainActivity() }
+            // Next button
             buttonNext.setOnClickListener {
                 val position = viewPager.currentItem
 
+                // If it is not the last page, go to the next page
+                // 마지막 페이지가 아니면 다음 페이지로 이동
                 if (position < adapter.fragments.size) {
                     viewPager.setCurrentItem(position + 1, true)
                     liveData.value = viewPager.currentItem
                 }
+                // If it is last page, start MainActivity
+                // 마지막 페이지면 MainActivity 시작
                 if (position == adapter.fragments.size - 1)
                     startMainActivity()
             }
 
+            // Total number of pages
+            // 전체 페이지 수
             textView2.text = (fragments.size - 2).toString()
         }
     }
@@ -80,6 +93,7 @@ class IntroActivity : AppCompatActivity() {
         super.onResume()
     }
 
+    // Start MainActivity
     private fun startMainActivity() {
         val pref = getSharedPreferences("restartCheck", MODE_PRIVATE)
         val editor = pref.edit()
@@ -87,12 +101,10 @@ class IntroActivity : AppCompatActivity() {
         editor.apply()
         startActivity(Intent(applicationContext, MainActivity::class.java))
         finish()
-        // 여기 같은데
-        // 메인에서 2번 꺼야 앱 꺼지는 거
-        // MainActivity -> IntroActivity -> MainActivity
-        // 여기서 Intro는 finish()가 됐는데 Main이 안 된 거잖아
     }
 
+    // Press twice to exit
+    // 2번 눌러 종료하기
     override fun onBackPressed() {
         if (System.currentTimeMillis() - backPressedLast < 2000) {
             finish()
@@ -103,6 +115,8 @@ class IntroActivity : AppCompatActivity() {
         backPressedLast = System.currentTimeMillis()
     }
 
+    // For log checking
+    // 로그 확인용
     fun println(data: String) {
         Log.d("IntroActivity", data)
     }

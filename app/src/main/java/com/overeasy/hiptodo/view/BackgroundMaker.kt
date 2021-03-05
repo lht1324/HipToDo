@@ -9,12 +9,15 @@ import java.util.*
 
 class BackgroundMaker(private val binding: ActivityMainBinding) {
     fun compareTime() {
-        // 6 : 30, 6 : 40, 6 : 50, 7 : 00, 18 : 30, 18 : 40, 18 : 50, 19 : 00
+        // 6 : 00 ~ 6 : 59
+        // 7 : 00 ~ 17 : 59
+        // 18 : 00 ~ 18 : 59
+        // 17 : 00 ~ 5 : 59
         val calendar: Calendar = GregorianCalendar()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
 
-        // 6 : 00 ~ 6 : 59
+        // 6 : 00 ~ 6 : 59 (Dawn)
         when (hour) {
             6 -> {
                 when (minute) {
@@ -64,7 +67,8 @@ class BackgroundMaker(private val binding: ActivityMainBinding) {
                     }
                 }
             }
-            // 7 : 00 ~ 17 : 59
+
+            // 7 : 00 ~ 17 : 59 (Day)
             in 7..17 -> {
                 Rainbow(binding.constraintLayout).palette {
                     + contextColor(R.color.day_1)
@@ -76,7 +80,8 @@ class BackgroundMaker(private val binding: ActivityMainBinding) {
                     + contextColor(R.color.day_7)
                 }.background(orientation = RainbowOrientation.BOTTOM_TOP)
             }
-            // 18 : 00 ~ 18 : 59
+
+            // 18 : 00 ~ 18 : 59 (Sunset)
             18 -> {
                 when (minute) {
                     in 0..14 -> {
@@ -125,7 +130,8 @@ class BackgroundMaker(private val binding: ActivityMainBinding) {
                     }
                 }
             }
-            // 19 : 00 ~ 5 : 59
+
+            // 19 : 00 ~ 5 : 59 (Night)
             else -> {
                 Rainbow(binding.constraintLayout).palette {
                     + contextColor(R.color.night_1)

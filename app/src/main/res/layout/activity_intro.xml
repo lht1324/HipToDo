@@ -32,7 +32,7 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/buttonDone"
+                    android:id="@+id/buttonSkip"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="10dp"
@@ -52,7 +52,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/buttonNext"
-                    app:layout_constraintStart_toEndOf="@+id/buttonDone"
+                    app:layout_constraintStart_toEndOf="@+id/buttonSkip"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView

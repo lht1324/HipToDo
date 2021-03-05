@@ -30,15 +30,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inputMethodManager: InputMethodManager
     private var backPressedLast: Long = 0
 
-    // 해야 할 것
-    // 로고 만들기
-
     override fun onCreate(savedInstanceState: Bundle?) {
         Thread.sleep(1500)
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Check whether it is the first run or rerun
+        // 첫 실행인지 재실행인지 체크
         val pref = getSharedPreferences("restartCheck", MODE_PRIVATE)
         val restartApp = pref.getBoolean("restartApp", false)
 
@@ -49,17 +48,11 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
-    override fun onStop() {
-        super.onStop()
-
-        val editor = getSharedPreferences("restartCheck", MODE_PRIVATE).edit()
-        editor.putBoolean("restartApp", true)
-        editor.apply()
-    }
-
     override fun onBackPressed() {
         viewModel.publishSubject.onComplete()
 
+        // Exit if touch once more before 2 secs
+        // 2초 전에 누르면 종료
         if (System.currentTimeMillis() - backPressedLast < 2000) {
             finish()
             return
@@ -69,59 +62,90 @@ class MainActivity : AppCompatActivity() {
         backPressedLast = System.currentTimeMillis()
     }
 
+    override fun onStop() {
+        super.onStop()
+
+        // Record it is already run
+        // 처음 실행이 아니란 것 기록
+        val editor = getSharedPreferences("restartCheck", MODE_PRIVATE).edit()
+        editor.putBoolean("restartApp", true)
+        editor.apply()
+    }
+
     private fun init() {
         viewModel = ViewModelProvider(this, ViewModel.Factory(application)).get(ViewModel::class.java)
         viewModel.onCreate()
         adapter = MainAdapter()
         adapter.setItems(viewModel.toDoList)
+        
         val backgroundMaker = BackgroundMaker(binding)
         val callback = ItemTouchHelperCallback(adapter)
         val touchHelper = ItemTouchHelper(callback)
         touchHelper.attachToRecyclerView(binding.recyclerView)
+
+        // Set background
+        // 배경 세팅
         backgroundMaker.compareTime()
 
+        // Initialize data binding
+        // 데이터바인딩 초기화
         binding.apply {
-            // recyclerView.adapter = adapter
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
             recyclerView.addItemDecoration(RecyclerViewDecoration(20))
             viewModel = viewModel
             lifecycleOwner = this@MainActivity
             editText.setOnKeyListener(addToDo)
+            
             helpButton.setOnClickListener {
                 startIntroActivity()
             }
         }
 
+        // Open Dialog when touch item
+        // 항목 누르면 Dialog 열기
         adapter.onItemClicked.observe(this, { clickedModel ->
             showDialog(clickedModel)
         })
+        // Delete item
+        // 항목 삭제
         adapter.onItemDeleted.observe(this, { toDo ->
             viewModel.deleteToDo(toDo)
         })
+        // Move item
+        // 항목 이동
         adapter.onItemMoved.observe(this, { toDoList ->
             viewModel.movedItemsUpdate(toDoList[0], toDoList[1])
         })
+        // Reset adapter when list contents are changed
+        // List 내용 변경 시 어댑터 재설정
         viewModel.toDoLiveData.observe(this, { toDoList ->
             adapter.setItems(toDoList)
             binding.recyclerView.adapter = adapter
         })
     }
 
+    // Add item when press Enter key in editText
+    // editText에서 엔터 누르면 항목 추가
     private var addToDo = View.OnKeyListener { view, keyCode, keyEvent ->
         if ((view as EditText).text.isNotEmpty() && keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.action == KeyEvent.ACTION_DOWN) {
             viewModel.publishSubject.onNext(view.text.toString())
 
-            view.text = null // EditText 초기화
+            // Initialize editText
+            // editText 초기화
+            view.text = null
 
+            // Hide keyboard
+            // 키보드 내리기
             inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-            // 키보드 내리기
             true
         }
         false
     }
 
+    // Initialize Dialog
+    // Dialog 초기화
     private fun showDialog(toDo: ToDo) {
         val toDoDialog = ToDoDialog(this)
         toDoDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -133,11 +157,14 @@ class MainActivity : AppCompatActivity() {
         toDoDialog.show()
     }
 
+    // Start IntroActivity
     private fun startIntroActivity() {
         startActivity(Intent(this, IntroActivity::class.java))
         finish()
     }
 
+    // For log checking
+    // 로그 확인용
     private fun println(data: String) {
         Log.d("MainActivity", data)
     }

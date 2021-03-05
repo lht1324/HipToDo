@@ -35,7 +35,9 @@ class ItemTouchHelperCallback(private val mAdapter: MainAdapter) : ItemTouchHelp
 
         if (isMoved) {
             isMoved = false
-            mAdapter.changeMoveEvent() // 마무리하면 들어오는 함수
+            mAdapter.changeMoveEvent()
+            // Function executed when drag and drop is finished
+            // 드래그 앤 드랍이 끝나면 실행된다
         }
     }
 
@@ -53,6 +55,9 @@ class ItemTouchHelperCallback(private val mAdapter: MainAdapter) : ItemTouchHelp
         isMoved = true
     }
 
+    // Executed when you drop during drag and drop, that is, when you release your hand.
+    // The adapter's notifyDataSetChanged() is executed when the hand is off from screen.
+    // 드래그 앤 드롭 중 드롭, 즉 손을 뗄 때 실행된다. 손을 땠을 때 어댑터의 notifyDataSetChanged() 실행.
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
 
